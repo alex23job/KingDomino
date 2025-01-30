@@ -10,6 +10,8 @@ public class LevelControl : MonoBehaviour
     private List<GameObject> newTails;
     private GameObject[] poleTails;
 
+    private GameObject selectCard = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,11 +31,24 @@ public class LevelControl : MonoBehaviour
         {
             if (newTails.Count < 8)
             {
-                Vector3 pos = new Vector3(-4.375f + 1.25f * newTails.Count, 1f, -8f);
+                Vector3 pos = new Vector3(-4.375f + 1.25f * newTails.Count, 1f, 0);
                 int ht1 = Random.Range(0, halfTails.Length);
                 int ht2 = Random.Range(0, halfTails.Length);
-                newTails.Add(TailControl.GenerateTail(halfTails[ht1], halfTails[ht2], pos));
+                GameObject go = TailControl.GenerateTail(halfTails[ht1], halfTails[ht2], pos, GetComponent<LevelControl>());
+                pos.z = 4.8f;
+                go.transform.position = pos;
+                newTails.Add(go);
             }
         }
+    }
+
+    public void SetSelectCard(GameObject go)
+    {
+
+    }
+
+    public void UpSelectCard()
+    {
+
     }
 }
