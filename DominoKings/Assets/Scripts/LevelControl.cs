@@ -37,11 +37,11 @@ public class LevelControl : MonoBehaviour
         {
             if (newTails.Count < 8)
             {
-                Vector3 pos = new Vector3(-4.375f + 1.25f * newTails.Count, 1f, 0);
+                Vector3 pos = new Vector3(-5.375f + 1.25f * newTails.Count, 1f, 0);
                 int ht1 = Random.Range(0, halfTails.Length);
                 int ht2 = Random.Range(0, halfTails.Length);
                 GameObject go = TailControl.GenerateTail(halfTails[ht1], halfTails[ht2], pos, GetComponent<LevelControl>());
-                pos.z = 4.8f;
+                pos.z = 5.7f;
                 go.transform.position = pos;
                 newTails.Add(go);
             }
