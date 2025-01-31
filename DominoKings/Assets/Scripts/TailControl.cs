@@ -129,7 +129,14 @@ public class TailControl : MonoBehaviour
     private void OnMouseUp()
     {
         //print($"pos = {transform.position}    up");
-        lc.UpSelectCard();
+        if (lc.UpSelectCard())
+        {
+            Destroy(transform.gameObject);
+        }
+        else
+        {
+            transform.position = beginPos;
+        }
         if (!Input.GetMouseButtonDown(0))
         {
             isMove = false;
