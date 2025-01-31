@@ -8,6 +8,8 @@ public class LevelControl : MonoBehaviour
     [SerializeField] private GameObject[] halfTails;
     [SerializeField] private GameObject[] builds;
 
+    [SerializeField] private GameObject chipRed, chipBlue;
+
     private List<GameObject> newTails;
     private List<int> numTail;
     private GameObject[] poleTails;
