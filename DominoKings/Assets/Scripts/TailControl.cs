@@ -11,6 +11,8 @@ public class TailControl : MonoBehaviour
     private Vector3 delta = Vector3.zero;
     private Vector3 beginPos = Vector3.zero;
 
+    public Vector3 BeginPos { get { return beginPos; } }
+
     // Start is called before the first frame update
     void Start()
     {
