@@ -57,14 +57,14 @@ public class LevelControl : MonoBehaviour
     {
         bool res = true;
         int si1, si2;
-        GameObject h1 = selectCard.transform.GetChild(1).gameObject;
-        GameObject h2 = selectCard.transform.GetChild(0).gameObject;
+        GameObject h1 = selectCard.transform.GetChild(0).gameObject;
+        GameObject h2 = selectCard.transform.GetChild(1).gameObject;
         int land1 = h1.GetComponent<HalfData>().LandID, land2 = h2.GetComponent<HalfData>().LandID;
         int x, y;
-        x = Mathf.RoundToInt(h1.transform.position.x + 5.5f); y = Mathf.RoundToInt(h1.transform.position.z + 3.5f);
+        x = Mathf.RoundToInt(h1.transform.position.x + 5.5f); y = Mathf.RoundToInt(3.5f - h1.transform.position.z);
         print($"h1 =>  x={x}  pos.x={h1.transform.position.x}  y={y}  pos.z={h1.transform.position.z}");
         si1 = ((x >= 0 && x < 10) && (y >= 0 && y < 10)) ? (10 * y + x) : -1;
-        x = Mathf.RoundToInt(h2.transform.position.x + 5.5f); y = Mathf.RoundToInt(h2.transform.position.z + 3.5f);
+        x = Mathf.RoundToInt(h2.transform.position.x + 5.5f); y = Mathf.RoundToInt(3.5f - h2.transform.position.z);
         print($"h2 =>  x={x}  pos.x={h2.transform.position.x}  y={y}  pos.z={h2.transform.position.z}");
         si2 = ((x >= 0 && x < 10) && (y >= 0 && y < 10)) ? (10 * y + x) : -1;
         print($"UpSelectCard si1={si1}  si2={si2}  ln1={land1}  ln2={land2}");
@@ -72,11 +72,11 @@ public class LevelControl : MonoBehaviour
         {   //  ячейки под карточкой пустые -> проверить соседние
             if (TestNeighboringCells(si1, si2, land1, land2))
             {   //  хотя бы в одной из ячеек рядом есть одинаковый ландшафт
-                Vector3 pos = new Vector3((si1 % 10) - 5.5f, 0, si1 / 10 - 3.5f);
+                Vector3 pos = new Vector3((si1 % 10) - 5.5f, 0, 4.5f - si1 / 10);
                 h1.transform.parent = null;
                 poleTails[si1] = h1;
                 h1.transform.position = pos;
-                pos = new Vector3((si2 % 10) - 5.5f, 0, si2 / 10 - 3.5f);
+                pos = new Vector3((si2 % 10) - 5.5f, 0, 4.5f - si2 / 10);
                 h2.transform.parent = null;
                 poleTails[si2] = h2;
                 h2.transform.position = pos;
@@ -106,8 +106,8 @@ public class LevelControl : MonoBehaviour
         if ((y2 > 0) && (y2 < y1) && (zn2 == pole[i2 - 10])) return true;   //  сверху такой же ландшафт
         if ((x1 > 0) && (x1 == x2) && ((zn1 == pole[i1 - 1]) || (zn2 == pole[i2 - 1]))) return true;   //  слева или справа такой же ландшафт
         if ((x1 < 9) && (x1 == x2) && ((zn1 == pole[i1 + 1]) || (zn2 == pole[i2 + 1]))) return true;  //  слева или справа такой же ландшафт
-        if ((y1 < 9) && (y2 > y1) && (zn1 == pole[i1 + 10])) return true;   //  снизу такой же ландшафт
-        if ((y2 < 9) && (y2 < y1) && (zn2 == pole[i2 + 10])) return true;   //  снизу такой же ландшафт
+        if ((y1 < 9) && (y2 < y1) && (zn1 == pole[i1 + 10])) return true;   //  снизу такой же ландшафт
+        if ((y2 < 9) && (y2 > y1) && (zn2 == pole[i2 + 10])) return true;   //  снизу такой же ландшафт
         return false;
     }
 }
