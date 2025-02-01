@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine;
 public class LevelControl : MonoBehaviour
 {
     [SerializeField] private UI_Control ui_Control;
+    [SerializeField] private EnemyAI enemyAI;
     [SerializeField] private GameObject[] halfTails;
     [SerializeField] private GameObject[] builds;
 
@@ -15,7 +17,11 @@ public class LevelControl : MonoBehaviour
     private GameObject[] poleTails;
     private int[] pole;
 
+    private int numStep = 0;
+
     private GameObject selectCard = null;
+
+    private ResourseSet playerRes, botRes;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +33,13 @@ public class LevelControl : MonoBehaviour
         pole[44] = 1;pole[45] = 2;
         poleTails[44] = Instantiate(halfTails[0], new Vector3(-1.5f, 0, 0.5f), Quaternion.identity);
         poleTails[45] = Instantiate(halfTails[1], new Vector3(-0.5f, 0, 0.5f), Quaternion.identity);
-        for (int i = 0; i < 8; i++) GenerateTail();
+        for (int i = 0; i < 8; i++)
+        {
+            GenerateTail();
+        }
+        //GameObject chBlue = Instantiate(chipBlue), chRed = Instantiate(chipRed);
+        newTails[0].GetComponent<TailControl>().SetNumPlayer(1, chipBlue);
+        newTails[1].GetComponent<TailControl>().SetNumPlayer(2, chipRed);
     }
 
     private void GenerateNumTails()
@@ -56,6 +68,8 @@ public class LevelControl : MonoBehaviour
         {
             Vector3 pos = new Vector3(-5.375f + 1.25f * newTails.Count, 1f, 0);
             int num = Random.Range(0, numTail.Count);
+            if (newTails.Count == 0) num = Random.Range(0, 14);
+            if (newTails.Count == 1) num = Random.Range(13, 25);
             int ht1 = numTail[num] / 10;
             int ht2 = numTail[num] % 10;
             numTail.RemoveAt(num);
@@ -104,13 +118,32 @@ public class LevelControl : MonoBehaviour
         ui_Control.ViewEndGamePanel(0, 0);
     }
 
+    public GameObject SelectCard()
+    {
+        if (numStep == 1)
+        {
+            numStep++;
+            return chipBlue;
+        }
+        else return null;
+    }
+
+    public void EndPlayerGame()
+    {
+        numStep++;
+    }
+
     public void SetSelectCard(GameObject go)
     {
-        selectCard = go;
+        if (numStep == 0)
+        {
+            selectCard = go;
+        }
     }
 
     public bool UpSelectCard()
     {
+        if (selectCard == null) return false;
         bool res = true;
         int si1, si2;
         GameObject h1 = selectCard.transform.GetChild(0).gameObject;
@@ -142,6 +175,7 @@ public class LevelControl : MonoBehaviour
                 int indNew = Mathf.RoundToInt((selectCard.GetComponent<TailControl>().BeginPos.x + 5.375f) / 1.25f);
                 //print($"indNew = {indNew}");
                 GenerateTail(indNew);
+                numStep++;
             }
             else res = false;
         }

@@ -10,6 +10,7 @@ public class TailControl : MonoBehaviour
     private bool isMove = false;
     private Vector3 delta = Vector3.zero;
     private Vector3 beginPos = Vector3.zero;
+    private int numPlayer = 0;
 
     public Vector3 BeginPos { get { return beginPos; } }
 
@@ -22,7 +23,7 @@ public class TailControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isOver && Input.GetMouseButtonDown(1))
+        if (isOver && (numPlayer > 0) && Input.GetMouseButtonDown(1))
         {
             //print("mouse down R (1)");
             Rotate();
@@ -32,7 +33,6 @@ public class TailControl : MonoBehaviour
             Vector3 mp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3 figPos = transform.position;
             figPos.x = mp.x + delta.x; figPos.z = mp.z + delta.z;
-            //txtDebug.text = $"<{(int)figPos.x},{(int)figPos.z}> x={(int)mp.x} y={(int)mp.z}";
             transform.position = figPos;
         }
     }
@@ -116,6 +116,12 @@ public class TailControl : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (numPlayer == 0)
+        {
+            GameObject prefab = lc.SelectCard();
+            if (prefab != null) SetNumPlayer(1, prefab);
+            return;
+        }
         //print($"pos = {transform.position}    down");
         lc.SetSelectCard(transform.gameObject);
         if (Input.GetMouseButtonDown(0))
@@ -130,6 +136,7 @@ public class TailControl : MonoBehaviour
 
     private void OnMouseUp()
     {
+        if (numPlayer == 0) return;
         //print($"pos = {transform.position}    up");
         if (lc.UpSelectCard())
         {
@@ -150,4 +157,31 @@ public class TailControl : MonoBehaviour
     {
         lc = levCntr;
     }
+
+    public void SetNumPlayer(int num, GameObject prefab) 
+    {
+        numPlayer = num;
+        Transform ch1 = transform.GetChild(0);
+        Transform ch2 = transform.GetChild(1);
+        if (ch1 != null)
+        {
+            GameObject chip = Instantiate(prefab);
+            ch1.GetComponent<HalfData>().SetNumPlayer(num, chip.transform);
+        }
+        if (ch2 != null)
+        {
+            GameObject chip = Instantiate(prefab);
+            ch2.GetComponent<HalfData>().SetNumPlayer(num, chip.transform);
+        }
+    }
+
+    public bool TestLand(int numLand)
+    {
+        if (transform.GetChild(0).gameObject.GetComponent<HalfData>().LandID == numLand) return true;
+        if (transform.GetChild(1).gameObject.GetComponent<HalfData>().LandID == numLand) return true;
+        return false;
+    }
+
+    public int GetLandID1() => transform.GetChild(0).gameObject.GetComponent<HalfData>().LandID;
+    public int GetLandID2() => transform.GetChild(1).gameObject.GetComponent<HalfData>().LandID;
 }

@@ -9,6 +9,8 @@ public class HalfData : MonoBehaviour
     public int LandID = 0;
     public int BuildID = 0;
     public TypeResurse typeResourses = TypeResurse.none;
+    private int numPlayer = 0;
+    public int NumPlayer { get { return numPlayer; } }
 
     private GameObject build = null;
 
@@ -22,5 +24,12 @@ public class HalfData : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void SetNumPlayer(int num, Transform chip)
+    {
+        numPlayer = num;
+        chip.parent = transform;
+        chip.localPosition = new Vector3(-0.3f, 0.1f, -0.3f);
     }
 }
