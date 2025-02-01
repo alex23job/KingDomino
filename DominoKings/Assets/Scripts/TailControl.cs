@@ -144,7 +144,7 @@ public class TailControl : MonoBehaviour
         }
         else
         {
-            transform.position = beginPos;
+            if (beginPos != Vector3.zero) transform.position = beginPos;
         }
         if (!Input.GetMouseButtonDown(0))
         {
@@ -166,12 +166,12 @@ public class TailControl : MonoBehaviour
         if (ch1 != null)
         {
             GameObject chip = Instantiate(prefab);
-            ch1.GetComponent<HalfData>().SetNumPlayer(num, chip.transform);
+            ch1.GetComponent<HalfData>().SetNumPlayer(num, chip.transform, lc);
         }
         if (ch2 != null)
         {
             GameObject chip = Instantiate(prefab);
-            ch2.GetComponent<HalfData>().SetNumPlayer(num, chip.transform);
+            ch2.GetComponent<HalfData>().SetNumPlayer(num, chip.transform, lc);
         }
     }
 

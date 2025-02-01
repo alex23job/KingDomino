@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class UI_Control : MonoBehaviour
 {
     [SerializeField] private GameObject endGamePanel;
+    [SerializeField] private GameObject hintBuildPanel;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +19,11 @@ public class UI_Control : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void ViewHintBuildPanel()
+    {
+        hintBuildPanel.SetActive(true);
     }
 
     public void ViewEndGamePanel(int playerScore, int botScore)

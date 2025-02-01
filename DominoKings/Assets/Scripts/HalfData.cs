@@ -14,6 +14,9 @@ public class HalfData : MonoBehaviour
 
     private GameObject build = null;
 
+    private bool isPole = false;
+    private LevelControl levelControl = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,10 +29,25 @@ public class HalfData : MonoBehaviour
         
     }
 
-    public void SetNumPlayer(int num, Transform chip)
+    public void SetIsPole()
+    {
+        isPole = true;
+    }
+
+    public void SetNumPlayer(int num, Transform chip, LevelControl lc)
     {
         numPlayer = num;
         chip.parent = transform;
-        chip.localPosition = new Vector3(-0.3f, 0.1f, -0.3f);
+        chip.localPosition = new Vector3(-0.3f, 0.1f, -0.3f);        
+        levelControl = lc;
+    }
+
+    private void OnMouseDown()
+    {
+        print($"HalfTail isPole = {isPole}");
+        if (isPole && Input.GetMouseButtonDown(0))
+        {
+            levelControl.SetSelectHalfTail(LandID);
+        }
     }
 }

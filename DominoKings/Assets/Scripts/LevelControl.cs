@@ -133,6 +133,12 @@ public class LevelControl : MonoBehaviour
         numStep++;
     }
 
+    public void SetSelectHalfTail(int landID)
+    {
+        print($"SetSelectHalfTail land={landID}");
+        ui_Control.ViewHintBuildPanel();
+    }
+
     public void SetSelectCard(GameObject go)
     {
         if (numStep == 0)
@@ -166,10 +172,16 @@ public class LevelControl : MonoBehaviour
                 h1.transform.parent = null;
                 poleTails[si1] = h1;
                 h1.transform.position = pos;
+                h1.GetComponent<HalfData>().SetIsPole();
+                h1.AddComponent(typeof(BoxCollider));
+                h1.GetComponent<BoxCollider>().size = new Vector3(1f, 0.2f, 1f);
                 pos = new Vector3((si2 % 10) - 5.5f, 0, 4.5f - si2 / 10);
                 h2.transform.parent = null;
                 poleTails[si2] = h2;
                 h2.transform.position = pos;
+                h2.GetComponent<HalfData>().SetIsPole();
+                h2.AddComponent(typeof(BoxCollider));
+                h2.GetComponent<BoxCollider>().size = new Vector3(1f, 0.2f, 1f);
                 pole[si1] = land1;
                 pole[si2] = land2;
                 int indNew = Mathf.RoundToInt((selectCard.GetComponent<TailControl>().BeginPos.x + 5.375f) / 1.25f);
