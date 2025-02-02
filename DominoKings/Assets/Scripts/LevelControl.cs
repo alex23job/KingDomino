@@ -1,6 +1,7 @@
 using Assets.Scripts;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 public class LevelControl : MonoBehaviour
@@ -22,6 +23,8 @@ public class LevelControl : MonoBehaviour
     private GameObject selectCard = null;
 
     private ResourseSet playerRes, botRes;
+
+    private List<Loskut> arLos = new List<Loskut>();
 
     // Start is called before the first frame update
     void Start()
@@ -175,6 +178,7 @@ public class LevelControl : MonoBehaviour
                 h1.GetComponent<HalfData>().SetIsPole(si1);
                 h1.AddComponent(typeof(BoxCollider));
                 h1.GetComponent<BoxCollider>().size = new Vector3(1f, 0.2f, 1f);
+
                 pos = new Vector3((si2 % 10) - 5.5f, 0, 4.5f - si2 / 10);
                 h2.transform.parent = null;
                 poleTails[si2] = h2;
@@ -182,10 +186,12 @@ public class LevelControl : MonoBehaviour
                 h2.GetComponent<HalfData>().SetIsPole(si2);
                 h2.AddComponent(typeof(BoxCollider));
                 h2.GetComponent<BoxCollider>().size = new Vector3(1f, 0.2f, 1f);
+
+                AddToLoskutAr(h1.GetComponent<HalfData>(), h2.GetComponent<HalfData>());
                 pole[si1] = land1;
                 pole[si2] = land2;
+
                 int indNew = Mathf.RoundToInt((selectCard.GetComponent<TailControl>().BeginPos.x + 5.375f) / 1.25f);
-                //print($"indNew = {indNew}");
                 GenerateTail(indNew);
                 numStep++;
             }
@@ -215,5 +221,86 @@ public class LevelControl : MonoBehaviour
         if ((y1 < 9) && (y2 < y1) && (zn1 == pole[i1 + 10])) return true;   //  снизу такой же ландшафт
         if ((y2 < 9) && (y2 > y1) && (zn2 == pole[i2 + 10])) return true;   //  снизу такой же ландшафт
         return false;
+    }
+
+    private void AddToLoskutAr(HalfData hd1, HalfData hd2)
+    {
+        List<Loskut> tmpLoskuts = new List<Loskut>();
+
+        //  массив окружающих €чеек, которые надо проверить на принадлежность к лоскутам
+        List<int> posTails = new List<int>();
+        int i, x = hd1.NumPos % 10, y = hd1.NumPos / 10;
+        if (x > 0 && (hd1.NumPos - 1 != hd2.NumPos)) posTails.Add(hd1.NumPos - 1);
+        if (x < 9 && (hd1.NumPos + 1 != hd2.NumPos)) posTails.Add(hd1.NumPos + 1);
+        if (y > 0 && (hd1.NumPos - 10 != hd2.NumPos)) posTails.Add(hd1.NumPos - 10);
+        if (y < 9 && (hd1.NumPos + 10 != hd2.NumPos)) posTails.Add(hd1.NumPos + 10);
+        foreach (Loskut los in arLos)
+        {
+            if (los.LandID == hd1.LandID)
+            {
+                foreach (int n in posTails)
+                {
+                    if (los.IsContains(n))
+                    {
+                        if (tmpLoskuts.Contains(los) == false) { tmpLoskuts.Add(los); break; }
+                    }
+                }
+            }
+        }
+        if (tmpLoskuts.Count == 0)
+        {
+            arLos.Add(new Loskut(hd1));
+        }
+        else if (tmpLoskuts.Count == 1) tmpLoskuts[0].AddHalf(hd1);
+        else if (tmpLoskuts.Count > 1)
+        {
+            for (i = 1; i < tmpLoskuts.Count; i++)
+            {
+                tmpLoskuts[0].AddLoskut(tmpLoskuts[i]);
+                arLos.Remove(tmpLoskuts[i]);
+            }
+            tmpLoskuts[0].AddHalf(hd1);
+        }
+
+        x = hd2.NumPos % 10; y = hd2.NumPos / 10;
+        posTails.Clear();tmpLoskuts.Clear();
+        //if (x > 0 && (hd2.NumPos - 1 != hd1.NumPos)) posTails.Add(hd2.NumPos - 1);
+        //if (x < 9 && (hd2.NumPos + 1 != hd1.NumPos)) posTails.Add(hd2.NumPos + 1);
+        //if (y > 0 && (hd2.NumPos - 10 != hd1.NumPos)) posTails.Add(hd2.NumPos - 10);
+        //if (y < 9 && (hd2.NumPos + 10 != hd1.NumPos)) posTails.Add(hd2.NumPos + 10);
+        if (x > 0) posTails.Add(hd2.NumPos - 1);
+        if (x < 9) posTails.Add(hd2.NumPos + 1);
+        if (y > 0) posTails.Add(hd2.NumPos - 10);
+        if (y < 9) posTails.Add(hd2.NumPos + 10);
+        foreach (Loskut los in arLos)
+        {
+            if (los.LandID == hd2.LandID)
+            {
+                foreach (int n in posTails)
+                {
+                    if (los.IsContains(n))
+                    {
+                        if (tmpLoskuts.Contains(los) == false) { tmpLoskuts.Add(los); break; }
+                    }
+                }
+            }
+        }
+        if (tmpLoskuts.Count == 0)
+        {
+            arLos.Add(new Loskut(hd2));
+        }
+        else if (tmpLoskuts.Count == 1) tmpLoskuts[0].AddHalf(hd2);
+        else if (tmpLoskuts.Count > 1)
+        {
+            for (i = 1; i < tmpLoskuts.Count; i++)
+            {
+                tmpLoskuts[0].AddLoskut(tmpLoskuts[i]);
+                arLos.Remove(tmpLoskuts[i]);
+            }
+            tmpLoskuts[0].AddHalf(hd2);
+        }
+        StringBuilder sb = new StringBuilder($"arLos.Count={arLos.Count} => ");
+        for (i = 0; i < arLos.Count; i++) sb.Append($"<< i={i} {arLos[i]} >> ");
+        print(sb.ToString());
     }
 }

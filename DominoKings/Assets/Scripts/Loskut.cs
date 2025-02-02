@@ -8,11 +8,20 @@ namespace Assets.Scripts
 {
     public class Loskut
     {
-        public Loskut() { }
-        public Loskut(int li) { landID = li; }
+        public Loskut() 
+        {
+            landID = -1;
+            arHT = new List<HalfData>();
+        }
+        public Loskut(HalfData half) 
+        {
+            landID = half.LandID;
+            arHT = new List<HalfData>();
+            AddHalf(half);
+        }
 
         int landID = -1;
-        List<HalfData> arHT = new List<HalfData>();
+        List<HalfData> arHT;
         int countPlayerHalf = 0;
         int countBotHalf = 0;
 
@@ -45,6 +54,13 @@ namespace Assets.Scripts
         {
             List<HalfData> ar = los.GetAr();
             arHT.AddRange(ar);
+            countPlayerHalf += los.countPlayerHalf;
+            countBotHalf += los.countBotHalf;
+        }
+
+        public override string ToString()
+        {
+            return $"landID={landID}    cnt={arHT.Count}   pl_H={countPlayerHalf}   bot_H={countBotHalf}";
         }
     }
 
