@@ -135,7 +135,7 @@ public class LevelControl : MonoBehaviour
 
     public void SetSelectHalfTail(int landID)
     {
-        print($"SetSelectHalfTail land={landID}");
+        //print($"SetSelectHalfTail land={landID}");
         ui_Control.ViewHintBuildPanel();
     }
 
@@ -172,14 +172,14 @@ public class LevelControl : MonoBehaviour
                 h1.transform.parent = null;
                 poleTails[si1] = h1;
                 h1.transform.position = pos;
-                h1.GetComponent<HalfData>().SetIsPole();
+                h1.GetComponent<HalfData>().SetIsPole(si1);
                 h1.AddComponent(typeof(BoxCollider));
                 h1.GetComponent<BoxCollider>().size = new Vector3(1f, 0.2f, 1f);
                 pos = new Vector3((si2 % 10) - 5.5f, 0, 4.5f - si2 / 10);
                 h2.transform.parent = null;
                 poleTails[si2] = h2;
                 h2.transform.position = pos;
-                h2.GetComponent<HalfData>().SetIsPole();
+                h2.GetComponent<HalfData>().SetIsPole(si2);
                 h2.AddComponent(typeof(BoxCollider));
                 h2.GetComponent<BoxCollider>().size = new Vector3(1f, 0.2f, 1f);
                 pole[si1] = land1;

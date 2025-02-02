@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,23 @@ public class EnemyAI : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public bool SelectCardPos(int land1, int land2, int[] pole, List<Loskut> arLos)
+    {
+        List<HalfData> ar;
+        foreach(Loskut los in arLos)
+        {
+            if (land1 == los.LandID)
+            {
+                ar = los.GetAr();
+                foreach(HalfData hd in ar)
+                {
+
+                }
+            }
+        }
+        return true;
     }
 
     /// <summary>

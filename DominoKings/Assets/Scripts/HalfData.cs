@@ -11,6 +11,8 @@ public class HalfData : MonoBehaviour
     public TypeResurse typeResourses = TypeResurse.none;
     private int numPlayer = 0;
     public int NumPlayer { get { return numPlayer; } }
+    private int numPos = -1;
+    public int NumPos { get { return numPos; } }
 
     private GameObject build = null;
 
@@ -29,9 +31,10 @@ public class HalfData : MonoBehaviour
         
     }
 
-    public void SetIsPole()
+    public void SetIsPole(int pos)
     {
         isPole = true;
+        numPos = pos;
     }
 
     public void SetNumPlayer(int num, Transform chip, LevelControl lc)
@@ -44,7 +47,7 @@ public class HalfData : MonoBehaviour
 
     private void OnMouseDown()
     {
-        print($"HalfTail isPole = {isPole}");
+        //print($"HalfTail isPole = {isPole}");
         if (isPole && Input.GetMouseButtonDown(0))
         {
             levelControl.SetSelectHalfTail(LandID);
