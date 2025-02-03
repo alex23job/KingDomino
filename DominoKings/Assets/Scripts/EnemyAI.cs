@@ -17,21 +17,96 @@ public class EnemyAI : MonoBehaviour
         
     }
 
-    public bool SelectCardPos(int land1, int land2, int[] pole, List<Loskut> arLos)
+    public TailPos2 SelectCardPos(int land1, int land2, int[] pole, List<Loskut> arLos)
     {
-        List<HalfData> ar;
+        print($"EnemyAI SelectCardPos l1={land1} l2={land2} cntLos={arLos.Count}");
+        List<TailPos2> ar = new List<TailPos2>();
+        List<Loskut> tmpLos = new List<Loskut>();
+
         foreach(Loskut los in arLos)
         {
             if (land1 == los.LandID)
             {
-                ar = los.GetAr();
-                foreach(HalfData hd in ar)
-                {
-
+                tmpLos.Add(los);
+            }
+            if (land2 == los.LandID)
+            {
+                tmpLos.Add(los);
+            }
+        }
+        if (tmpLos.Count > 0) print($"tmpLos.Count={tmpLos.Count}    tmpLos[0]=<< {tmpLos[0]} >>");
+        List<HalfData> aH;
+        int x, y;
+        foreach(Loskut los in tmpLos)
+        {   //  собираем в массив возможные варианты установки карты рядом с занятой клеткой такой же местности
+            aH = los.GetAr();
+            foreach (HalfData hd in aH)
+            {
+                x = hd.NumPos % 10; y = hd.NumPos / 10;
+                if ((x > 0) && (pole[hd.NumPos - 1] == 0))
+                {   //  клетка слева свободна - а дальше в 3 стороны?
+                    if ((x > 1) && (pole[hd.NumPos - 2] == 0)) ar.Add(new TailPos2(hd.NumPos - 1, hd.NumPos - 2, los.CountBotHalf, los.LandID));
+                    if ((y > 0) && (pole[hd.NumPos - 11] == 0)) ar.Add(new TailPos2(hd.NumPos - 1, hd.NumPos - 11, los.CountBotHalf, los.LandID));
+                    if ((y < 9) && (pole[hd.NumPos + 9] == 0)) ar.Add(new TailPos2(hd.NumPos - 1, hd.NumPos + 9, los.CountBotHalf, los.LandID));
+                }
+                if ((x < 9) && (pole[hd.NumPos + 1] == 0))
+                {   //  клетка справа свободна - а дальше в 3 стороны?
+                    if ((x < 8) && (pole[hd.NumPos + 2] == 0)) ar.Add(new TailPos2(hd.NumPos + 1, hd.NumPos + 2, los.CountBotHalf, los.LandID));
+                    if ((y > 0) && (pole[hd.NumPos - 9] == 0)) ar.Add(new TailPos2(hd.NumPos + 1, hd.NumPos - 9, los.CountBotHalf, los.LandID));
+                    if ((y < 9) && (pole[hd.NumPos + 11] == 0)) ar.Add(new TailPos2(hd.NumPos + 1, hd.NumPos + 11, los.CountBotHalf, los.LandID));
+                }
+                if ((y > 0) && (pole[hd.NumPos - 10] == 0))
+                {   //  клетка сверху свободна - а дальше в 3 стороны?
+                    if ((y > 1) && (pole[hd.NumPos - 20] == 0)) ar.Add(new TailPos2(hd.NumPos - 10, hd.NumPos - 20, los.CountBotHalf, los.LandID));
+                    if ((x > 0) && (pole[hd.NumPos - 11] == 0)) ar.Add(new TailPos2(hd.NumPos - 10, hd.NumPos - 11, los.CountBotHalf, los.LandID));
+                    if ((x < 9) && (pole[hd.NumPos - 9] == 0)) ar.Add(new TailPos2(hd.NumPos - 10, hd.NumPos - 9, los.CountBotHalf, los.LandID));
+                }
+                if ((y < 9) && (pole[hd.NumPos + 10] == 0))
+                {   //  клетка снизу свободна - а дальше в 3 стороны?
+                    if ((y < 8) && (pole[hd.NumPos + 20] == 0)) ar.Add(new TailPos2(hd.NumPos + 10, hd.NumPos + 20, los.CountBotHalf, los.LandID));
+                    if ((x > 0) && (pole[hd.NumPos + 9] == 0)) ar.Add(new TailPos2(hd.NumPos + 10, hd.NumPos + 9, los.CountBotHalf, los.LandID));
+                    if ((x < 9) && (pole[hd.NumPos + 11] == 0)) ar.Add(new TailPos2(hd.NumPos + 10, hd.NumPos + 11, los.CountBotHalf, los.LandID));
                 }
             }
         }
-        return true;
+        print($"SelectCardPos => tp2.count={ar.Count} tp2[0]=<< {(ar.Count > 0 ? ar[0] : "none ?")} >>  tp2[1]=<< {(ar.Count > 1 ? ar[1] : "none ?")} >>");
+        if (land1 != land2)
+        {   //  половинки карточки разные - добавляем значимость возможной пристыковки 2 половинки
+            foreach(TailPos2 tp in ar)
+            {
+                bool isAdding;
+                foreach(Loskut los in tmpLos)
+                {
+                    isAdding = false;
+                    if (los.LandID != tp.land)
+                    {
+                        x = tp.hf2 % 10; y = tp.hf2 / 10;
+                        aH = los.GetAr();
+                        foreach (HalfData hd in aH)
+                        {
+                            if ((x > 0) && (tp.hf2 - 1 == hd.NumPos)) isAdding = true;
+                            if ((x < 0) && (tp.hf2 + 1 == hd.NumPos)) isAdding = true;
+                            if ((y > 0) && (tp.hf2 - 10 == hd.NumPos)) isAdding = true;
+                            if ((y < 0) && (tp.hf2 + 10 == hd.NumPos)) isAdding = true;
+                        }
+                    }
+                    if (isAdding) tp.countHalf += los.CountBotHalf;
+                }
+            }
+        }
+        int maxCountBotHalf = -1;
+        TailPos2 res = new TailPos2(-1, -1, 0, 0);
+        foreach(TailPos2 tp in ar)
+        {
+            if (maxCountBotHalf < tp.countHalf)
+            {
+                res = tp;
+                maxCountBotHalf = tp.countHalf;
+            }
+        }
+        print($"SelectCardPos res=<< {res} >>");
+        if (maxCountBotHalf != -1) return res;
+        return new TailPos2(-1, -1);
     }
 
     /// <summary>

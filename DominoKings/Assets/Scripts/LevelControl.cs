@@ -36,6 +36,12 @@ public class LevelControl : MonoBehaviour
         pole[44] = 1;pole[45] = 2;
         poleTails[44] = Instantiate(halfTails[0], new Vector3(-1.5f, 0, 0.5f), Quaternion.identity);
         poleTails[45] = Instantiate(halfTails[1], new Vector3(-0.5f, 0, 0.5f), Quaternion.identity);
+        HalfData hd1 = poleTails[44].GetComponent<HalfData>();
+        HalfData hd2 = poleTails[45].GetComponent<HalfData>();
+        //  не забыть про построить на половинках замок и рынок
+        hd1.SetIsPole(44);hd2.SetIsPole(45);
+        arLos.Add(new Loskut(hd1));
+        arLos.Add(new Loskut(hd2));
         for (int i = 0; i < 8; i++)
         {
             GenerateTail();
@@ -131,13 +137,78 @@ public class LevelControl : MonoBehaviour
         else return null;
     }
 
-    public void EndPlayerGame()
+    public void EndPlayerStep()
     {
         numStep++;
+        CollectResoure(playerRes);
+        int i, ln1 = 0, ln2 = 0;
+        TailControl tc = null;
+        for (i = 0; i < 8; i++)
+        {
+            tc = newTails[i].GetComponent<TailControl>();
+            if (tc.NumPlayer == 2)
+            {
+                ln1 = tc.LandID_1; ln2 = tc.LandID_2;
+                break;
+            }
+        }
+        //print($"EndPlayerStep =>  ln1 = {ln1} ln2 = {ln2}");
+        TailPos2 tp2 = enemyAI.SelectCardPos(ln1, ln2, pole, arLos);
+        if (tp2.hf1 != -1 && tp2.hf2 != -1)
+        {   //  установить карточку на выбранную позицию
+            print($"EndPlayerStep =>  res=<< {tp2} >>");
+            if (tc != null)
+            {
+                //  можно установить карточку как предлагает Бот
+                GameObject h1 = tc.transform.GetChild(0).gameObject;
+                GameObject h2 = tc.transform.GetChild(1).gameObject;
+                if (ln1 != tp2.land)
+                {
+                    h1 = tc.transform.GetChild(1).gameObject;
+                    h2 = tc.transform.GetChild(0).gameObject;
+                }
+                Vector3 pos = new Vector3((tp2.hf1 % 10) - 5.5f, 0, 4.5f - tp2.hf1 / 10);
+                h1.transform.parent = null;
+                poleTails[tp2.hf1] = h1;
+                h1.transform.position = pos;
+                h1.GetComponent<HalfData>().SetIsPole(tp2.hf1);
+                h1.AddComponent(typeof(BoxCollider));
+                h1.GetComponent<BoxCollider>().size = new Vector3(1f, 0.2f, 1f);
+
+                pos = new Vector3((tp2.hf2 % 10) - 5.5f, 0, 4.5f - tp2.hf2 / 10);
+                h2.transform.parent = null;
+                poleTails[tp2.hf2] = h2;
+                h2.transform.position = pos;
+                h2.GetComponent<HalfData>().SetIsPole(tp2.hf2);
+                h2.AddComponent(typeof(BoxCollider));
+                h2.GetComponent<BoxCollider>().size = new Vector3(1f, 0.2f, 1f);
+
+                AddToLoskutAr(h1.GetComponent<HalfData>(), h2.GetComponent<HalfData>());
+                pole[tp2.hf1] = ln1;
+                pole[tp2.hf2] = ln2;
+                if (ln1 != tp2.land)
+                {
+                    pole[tp2.hf1] = ln2;
+                    pole[tp2.hf2] = ln1;
+                }
+
+                int indNew = Mathf.RoundToInt((tc.GetComponent<TailControl>().BeginPos.x + 5.375f) / 1.25f);
+                GenerateTail(indNew);
+                Destroy(tc.gameObject);
+            }
+
+        }
+        int numCard = enemyAI.GetNextTail(pole, newTails);
+        if (numCard != -1)
+        {
+            newTails[numCard].GetComponent<TailControl>().SetNumPlayer(2, chipRed);
+        }
+        CollectResoure(botRes);
+        numStep = 0;
     }
 
     public void SetSelectHalfTail(int landID)
-    {
+    {   //  не забыть про замок и рынок
         //print($"SetSelectHalfTail land={landID}");
         ui_Control.ViewHintBuildPanel();
     }
@@ -193,6 +264,7 @@ public class LevelControl : MonoBehaviour
 
                 int indNew = Mathf.RoundToInt((selectCard.GetComponent<TailControl>().BeginPos.x + 5.375f) / 1.25f);
                 GenerateTail(indNew);
+                Destroy(selectCard);
                 numStep++;
             }
             else res = false;
@@ -230,10 +302,12 @@ public class LevelControl : MonoBehaviour
         //  массив окружающих ячеек, которые надо проверить на принадлежность к лоскутам
         List<int> posTails = new List<int>();
         int i, x = hd1.NumPos % 10, y = hd1.NumPos / 10;
+        //print($"AddToLoskutAr =>  x={x} y={y}");
         if (x > 0 && (hd1.NumPos - 1 != hd2.NumPos)) posTails.Add(hd1.NumPos - 1);
         if (x < 9 && (hd1.NumPos + 1 != hd2.NumPos)) posTails.Add(hd1.NumPos + 1);
         if (y > 0 && (hd1.NumPos - 10 != hd2.NumPos)) posTails.Add(hd1.NumPos - 10);
         if (y < 9 && (hd1.NumPos + 10 != hd2.NumPos)) posTails.Add(hd1.NumPos + 10);
+        print($"AddToLoskutAr =>  posTails.Count={posTails.Count} pT[0]={(posTails.Count > 0 ? posTails[0] : -1)} pT[1]={(posTails.Count > 1 ? posTails[1] : -1)} pT[2]={(posTails.Count > 2 ? posTails[2] : -1)}");
         foreach (Loskut los in arLos)
         {
             if (los.LandID == hd1.LandID)
@@ -247,6 +321,7 @@ public class LevelControl : MonoBehaviour
                 }
             }
         }
+        print($"AddToLoskutAr tmpLoskuts.Count = {tmpLoskuts.Count}");
         if (tmpLoskuts.Count == 0)
         {
             arLos.Add(new Loskut(hd1));
@@ -302,5 +377,10 @@ public class LevelControl : MonoBehaviour
         StringBuilder sb = new StringBuilder($"arLos.Count={arLos.Count} => ");
         for (i = 0; i < arLos.Count; i++) sb.Append($"<< i={i} {arLos[i]} >> ");
         print(sb.ToString());
+    }
+
+    private void CollectResoure(ResourseSet rs)
+    {
+
     }
 }

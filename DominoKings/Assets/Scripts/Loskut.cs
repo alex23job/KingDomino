@@ -64,17 +64,24 @@ namespace Assets.Scripts
         }
     }
 
-    public struct TailPos2
+    public class TailPos2
     {
         public int hf1;
         public int hf2;
         public int countHalf;
+        public int land;
 
-        public TailPos2(int n1, int n2, int ch = 0)
+        public TailPos2(int n1, int n2, int ch = 0, int l = 0)
         {
             hf1 = n1;
             hf2 = n2;
             countHalf = ch;
+            land = l;
+        }
+
+        public override string ToString()
+        {
+            return $"hf1={hf1}  hf2={hf2}  countHalf={countHalf}  landID={land}";
         }
     }
 }

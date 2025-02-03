@@ -11,8 +11,14 @@ public class TailControl : MonoBehaviour
     private Vector3 delta = Vector3.zero;
     private Vector3 beginPos = Vector3.zero;
     private int numPlayer = 0;
+    private int landID_1 = 0, landID_2 = 0;
+
+    public int NumPlayer { get { return numPlayer; } }
 
     public Vector3 BeginPos { get { return beginPos; } }
+
+    public int LandID_1 { get { return landID_1; } }
+    public int LandID_2 { get { return landID_2; } }
 
     // Start is called before the first frame update
     void Start()
@@ -42,7 +48,8 @@ public class TailControl : MonoBehaviour
         GameObject go = new GameObject();
         go.transform.position = pos;
         go.AddComponent(typeof(TailControl));
-        go.GetComponent<TailControl>().SetParam(lc);
+        TailControl tailControl = go.GetComponent<TailControl>();
+        tailControl.SetParam(lc);
         go.AddComponent(typeof(BoxCollider));
         go.GetComponent<BoxCollider>().size = new Vector3(1f, 0.2f, 2f);
         Vector3 pos1 = pos, pos2 = pos;
@@ -51,7 +58,14 @@ public class TailControl : MonoBehaviour
         GameObject half2 = Instantiate(prHt2, pos2, Quaternion.identity);
         half1.transform.parent = go.transform;
         half2.transform.parent = go.transform;
+        tailControl.SetHalfLands(prHt1.GetComponent<HalfData>().LandID, prHt2.GetComponent<HalfData>().LandID);
         return go;
+    }
+
+    public void SetHalfLands(int land1, int land2)
+    {
+        landID_1 = land1;
+        landID_2 = land2;
     }
 
     public void Rotate()
@@ -161,6 +175,7 @@ public class TailControl : MonoBehaviour
     public void SetNumPlayer(int num, GameObject prefab) 
     {
         numPlayer = num;
+        beginPos = transform.position;
         Transform ch1 = transform.GetChild(0);
         Transform ch2 = transform.GetChild(1);
         if (ch1 != null)
