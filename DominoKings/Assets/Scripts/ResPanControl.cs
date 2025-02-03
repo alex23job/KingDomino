@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -47,4 +48,12 @@ public class ResPanControl : MonoBehaviour
         txt5Stone.text = zn.ToString();
     }
 
+    public void ViewAllResorses(ResourseSet set)
+    {
+        txt1Coin.text = set.CountMoney.ToString();
+        txt2Food.text = set.CountFood.ToString();
+        txt3Tree.text = set.CountTree.ToString();
+        txt4Iron.text = set.CountIron.ToString();
+        txt5Stone.text = set.CountStone.ToString();
+    }
 }

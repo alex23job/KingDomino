@@ -15,6 +15,12 @@ namespace Assets.Scripts
         private int countIron;
         private int countStone;
 
+        public int CountMoney { get { return countMoney; } }
+        public int CountFood { get { return countFood; } }
+        public int CountTree { get { return countTree; } }
+        public int CountIron { get { return countIron; } }
+        public int CountStone { get { return countStone; } }
+
         public ResourseSet() { }
         public ResourseSet(int id, int mon = 0, int food = 0, int tree = 0, int iron = 0, int stone = 0)
         {
@@ -24,6 +30,15 @@ namespace Assets.Scripts
             countTree = tree;
             countIron = iron;
             countStone = stone;
+        }
+
+        public void AddResourse(ResourseSet set)
+        {
+            countMoney += set.CountMoney;
+            countFood += set.CountFood;
+            countTree += set.CountTree;
+            countIron += set.CountIron;
+            countStone += set.CountStone;
         }
         public void AddResourse(int mon = 0, int food = 0, int tree = 0, int iron = 0, int stone = 0)
         {

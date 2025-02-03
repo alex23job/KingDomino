@@ -58,6 +58,26 @@ namespace Assets.Scripts
             countBotHalf += los.countBotHalf;
         }
 
+        /// <summary>
+        /// Функция возвращает набор ресурсов, полученных на участках этой области
+        /// для игрока - mode = 1, для бота - mode = 2
+        /// </summary>
+        /// <param name="mode">1 - игрок, 2 - бот</param>
+        /// <returns>суммарный набор ресурсов</returns>
+        public ResourseSet GetResourses(int mode)
+        {
+            ResourseSet res = new ResourseSet(0);
+            foreach(HalfData hd in arHT)
+            {
+                if (hd.NumPlayer == mode)
+                {
+                    res.AddResourse(hd.GetLandResourse());
+                    res.AddResourse(hd.GetBuildResourses());
+                }
+            }
+            return res;
+        }
+
         public override string ToString()
         {
             return $"landID={landID}    cnt={arHT.Count}   pl_H={countPlayerHalf}   bot_H={countBotHalf}";

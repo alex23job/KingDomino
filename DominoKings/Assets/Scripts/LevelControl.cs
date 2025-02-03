@@ -49,6 +49,10 @@ public class LevelControl : MonoBehaviour
         //GameObject chBlue = Instantiate(chipBlue), chRed = Instantiate(chipRed);
         newTails[0].GetComponent<TailControl>().SetNumPlayer(1, chipBlue);
         newTails[1].GetComponent<TailControl>().SetNumPlayer(2, chipRed);
+        playerRes = new ResourseSet(1, 10, 4, 2, 0, 0);
+        botRes = new ResourseSet(1, 10, 4, 2, 0, 0);
+        ui_Control.ViewResPlayer(playerRes);
+        ui_Control.ViewResBot(botRes);
     }
 
     private void GenerateNumTails()
@@ -140,7 +144,7 @@ public class LevelControl : MonoBehaviour
     public void EndPlayerStep()
     {
         numStep++;
-        CollectResoure(playerRes);
+        CollectResoure(playerRes, 1);
         int i, ln1 = 0, ln2 = 0;
         TailControl tc = null;
         for (i = 0; i < 8; i++)
@@ -203,7 +207,7 @@ public class LevelControl : MonoBehaviour
         {
             newTails[numCard].GetComponent<TailControl>().SetNumPlayer(2, chipRed);
         }
-        CollectResoure(botRes);
+        CollectResoure(botRes, 2);
         numStep = 0;
     }
 
@@ -379,8 +383,19 @@ public class LevelControl : MonoBehaviour
         print(sb.ToString());
     }
 
-    private void CollectResoure(ResourseSet rs)
+    private void CollectResoure(ResourseSet rs, int mode)
     {
-
+        foreach(Loskut los in arLos)
+        {
+            rs.AddResourse(los.GetResourses(mode));
+        }
+        if (mode == 1)
+        {   //  собираем ресурсы для игрока
+            ui_Control.ViewResPlayer(rs);
+        }
+        if (mode == 2)
+        {   //  собираем ресурсы для бота
+            ui_Control.ViewResBot(rs);
+        }
     }
 }
