@@ -48,5 +48,10 @@ namespace Assets.Scripts
             countIron += iron;
             countStone += stone;
         }
+
+        public override string ToString()
+        {
+            return $"m={countMoney} f={countFood} t={countTree} i={countIron} s={countStone}";
+        }
     }
 }

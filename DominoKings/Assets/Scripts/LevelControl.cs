@@ -17,6 +17,7 @@ public class LevelControl : MonoBehaviour
     private List<int> numTail;
     private GameObject[] poleTails;
     private int[] pole;
+    private int numTailForBuild = -1;
 
     private int numStep = 0;
 
@@ -215,7 +216,7 @@ public class LevelControl : MonoBehaviour
         numStep = 0;
     }
 
-    public void SetSelectHalfTail(int landID, int buildID)
+    public void SetSelectHalfTail(int landID, int buildID, int numHalfTail)
     {   //  не забыть про замок и рынок
         //print($"SetSelectHalfTail land={landID}");
         if (buildID != 0)
@@ -227,11 +228,23 @@ public class LevelControl : MonoBehaviour
         }
         else if (landID > 0 && landID < 8)
         {
+            numTailForBuild = numHalfTail;
             string nm1 = builds[ConstructionData.LandsBuilds[landID - 1][0] - 1].GetComponent<ConstructionData>().NameConstruction;
             string nm2 = builds[ConstructionData.LandsBuilds[landID - 1][1] - 1].GetComponent<ConstructionData>().NameConstruction;
             //print($"SetSelectHalfTail land={landID} {ConstructionData.LandsBuilds[landID - 1]} nm1={nm1} nm2={nm2}");
             ui_Control.ViewHintBuildPanel(landID, playerRes, nm1, nm2);
         }
+    }
+
+    public void OnClickExitHBP()
+    {
+        numTailForBuild = -1;
+    }
+
+    public void OnClickBuildHBP(int zn)
+    {
+        HalfData hd = poleTails[numTailForBuild].GetComponent<HalfData>();
+        hd.BuildComplete(builds[ConstructionData.LandsBuilds[hd.LandID - 1][zn] - 1]);
     }
 
     public void SetSelectCard(GameObject go)

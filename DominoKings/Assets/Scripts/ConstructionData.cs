@@ -60,4 +60,10 @@ public class ConstructionData : MonoBehaviour
     public int CountStars { get { return cntStars; } }
     public Sprite ConstSprite { get { return sprite; } }
     public string NameConstruction { get { return (Language.Instance.CurrentLanguage == "ru" ? nameRu : nameEn); } }
+
+    public void InitResourseSet()
+    {
+        if ((buildID > 0) && (buildID <= ConstructionData.BuildResourses.Count)) resSet = ConstructionData.BuildResourses[buildID - 1];
+        print($"buildID={buildID} {resSet}");
+    }
 }

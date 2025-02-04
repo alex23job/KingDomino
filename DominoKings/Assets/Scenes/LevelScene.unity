@@ -686,6 +686,7 @@ MonoBehaviour:
   - {fileID: 899659220}
   - {fileID: 1016969932}
   - {fileID: 1536922120}
+  ID: 1
 --- !u!114 &152950486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1717,7 +1718,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 60, y: 42.7}
-  m_SizeDelta: {x: 160, y: 40}
+  m_SizeDelta: {x: 150, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &551039762
 MonoBehaviour:
@@ -2515,6 +2516,7 @@ MonoBehaviour:
   - {fileID: 574873692}
   - {fileID: 152466965}
   - {fileID: 327107652}
+  ID: 2
 --- !u!114 &724126028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3199,6 +3201,9 @@ MonoBehaviour:
   hintBuildPanel: {fileID: 2097635008}
   rpcPlayer: {fileID: 856974793}
   rpcBot: {fileID: 823289904}
+  arPanels:
+  - {fileID: 152950485}
+  - {fileID: 724126027}
 --- !u!1 &908156729
 GameObject:
   m_ObjectHideFlags: 0
@@ -3386,7 +3391,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 932696987}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1674155961}
+        m_TargetAssemblyTypeName: LevelControl, Assembly-CSharp
+        m_MethodName: OnClickBuildHBP
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2097635008}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &932696987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3956,6 +3985,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1674155961}
+        m_TargetAssemblyTypeName: LevelControl, Assembly-CSharp
+        m_MethodName: OnClickExitHBP
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 2097635008}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -5333,7 +5374,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 60, y: 42.7}
-  m_SizeDelta: {x: 160, y: 40}
+  m_SizeDelta: {x: 150, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1647767657
 MonoBehaviour:
@@ -6222,7 +6263,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1894669180}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1674155961}
+        m_TargetAssemblyTypeName: LevelControl, Assembly-CSharp
+        m_MethodName: OnClickBuildHBP
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2097635008}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1894669180
 MonoBehaviour:
   m_ObjectHideFlags: 0
