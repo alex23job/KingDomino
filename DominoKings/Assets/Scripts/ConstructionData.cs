@@ -9,7 +9,17 @@ public class ConstructionData : MonoBehaviour
     {
         new ResourseSet(-1, 1, 1, 0, 0, 0), //  мельница
         new ResourseSet(-1, 1, 1, 0, 0, 0), //  ферма
-        new ResourseSet(-1, 1, 0, 1, 0, 0)  //  лесопилка
+        new ResourseSet(-1, 1, 0, 2, 0, 0), //  лесопилка
+        new ResourseSet(-1, 1, 1, 0, 0, 0), //  домик рыбака
+        new ResourseSet(-1, 1, 1, 0, 0, 0), //  сети
+        new ResourseSet(-1, 1, 0, 0, 2, 0), //  шахта
+        new ResourseSet(-1, 1, 0, 0, 0, 2), //  каменоломня
+        new ResourseSet(-1, 1, 2, 0, 0, 0), //  огород
+        new ResourseSet(-1, 1, 2, 0, 0, 0), //  сад
+        new ResourseSet(-1, 2, 0, 1, 1, 1), //  монастырь
+        new ResourseSet(-1, 2, 0, 0, 0, 1), //  гончарня
+        new ResourseSet(-1, 3, 1, 0, 0, 0), //  порт
+        new ResourseSet(-1, 2, 0, 0, 1, 0)  //  кузница     
     };
 
     //  массив ID зданий, которые можно построить на видах местности (LandID - 1)
