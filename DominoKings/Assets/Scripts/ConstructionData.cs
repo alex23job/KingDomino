@@ -22,6 +22,23 @@ public class ConstructionData : MonoBehaviour
         new ResourseSet(-1, 2, 0, 0, 1, 0)  //  кузница     
     };
 
+    public static List<ResourseSet> BuildPrice = new List<ResourseSet>()
+    {
+        new ResourseSet(-1, 6, 2, 2, 1, 2), //  мельница
+        new ResourseSet(-1, 8, 4, 2, 0, 2), //  ферма
+        new ResourseSet(-1, 10, 2, 4, 1, 0), //  лесопилка
+        new ResourseSet(-1, 8, 2, 2, 1, 0), //  домик рыбака
+        new ResourseSet(-1, 4, 2, 0, 0, 0), //  сети
+        new ResourseSet(-1, 10, 2, 4, 0, 0), //  шахта
+        new ResourseSet(-1, 6, 2, 2, 1, 0), //  каменоломня
+        new ResourseSet(-1, 4, 2, 0, 0, 0), //  огород
+        new ResourseSet(-1, 4, 2, 2, 0, 0), //  сад
+        new ResourseSet(-1, 20, 10, 8, 2, 6), //  монастырь
+        new ResourseSet(-1, 10, 2, 2, 0, 2), //  гончарня
+        new ResourseSet(-1, 20, 8, 6, 2, 6), //  порт
+        new ResourseSet(-1, 12, 2, 4, 1, 2)  //  кузница     
+    };
+
     //  массив ID зданий, которые можно построить на видах местности (LandID - 1)
     //  1 поле - мельница(1), огород(8); 2 луг - ферма(2), сад(9); 3 лес - лесопилка(3), монастырь(10); 4 река - домик рыбака(4), гончарня(11)
     //  5 вода - сети(5), порт(12); 6 холмы - шахта(6), кузница(13); 7 - каменоломня(7), монастырь(10)
