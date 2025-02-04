@@ -137,5 +137,5 @@ MonoBehaviour:
   buildID: 11
   nameRu: "\u0413\u043E\u043D\u0447\u0430\u0440\u043D\u044F"
   nameEn: Pottery
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: b8617b00f43b7cb4b9204ae06f389fbe, type: 3}
   cntStars: 2

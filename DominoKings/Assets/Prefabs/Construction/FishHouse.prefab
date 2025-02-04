@@ -50,7 +50,7 @@ MonoBehaviour:
   buildID: 4
   nameRu: "\u0414\u043E\u043C \u0440\u044B\u0431\u0430\u043A\u0430"
   nameEn: Fisherman's House
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 32aeabd31d0339b40a59d306458af4cb, type: 3}
   cntStars: 1
 --- !u!1 &4863876799158264643
 GameObject:

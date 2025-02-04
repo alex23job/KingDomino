@@ -134,5 +134,5 @@ MonoBehaviour:
   buildID: 6
   nameRu: "\u0428\u0430\u0445\u0442\u0430"
   nameEn: Mine
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: cab160b6eaf185149acdba96f9c791e6, type: 3}
   cntStars: 1

@@ -48,7 +48,7 @@ MonoBehaviour:
   buildID: 2
   nameRu: "\u0424\u0435\u0440\u043C\u0430"
   nameEn: Farmhouse
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 330371c5d6b147c48b86bfca723e3e1c, type: 3}
   cntStars: 1
 --- !u!1 &2965652141007568553
 GameObject:

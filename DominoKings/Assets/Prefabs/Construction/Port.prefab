@@ -48,7 +48,7 @@ MonoBehaviour:
   buildID: 12
   nameRu: "\u041F\u043E\u0440\u0442"
   nameEn: Port
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: e677f52496cd3c84ab8197a16ee177fc, type: 3}
   cntStars: 2
 --- !u!1 &7673046181883665248
 GameObject:

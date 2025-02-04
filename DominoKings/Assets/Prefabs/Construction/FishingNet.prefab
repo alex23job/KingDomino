@@ -301,5 +301,5 @@ MonoBehaviour:
   buildID: 5
   nameRu: "\u0420\u044B\u0431\u0430\u0446\u043A\u0438\u0435 \u0441\u0435\u0442\u0438"
   nameEn: Fishing nets
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 31dc0b60cc47fd3478ff78642dba57f4, type: 3}
   cntStars: 1

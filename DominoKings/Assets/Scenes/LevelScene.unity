@@ -4530,6 +4530,7 @@ GameObject:
   - component: {fileID: 2097635009}
   - component: {fileID: 2097635011}
   - component: {fileID: 2097635010}
+  - component: {fileID: 2097635012}
   m_Layer: 5
   m_Name: HintBuildPanel
   m_TagString: Untagged
@@ -4595,6 +4596,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2097635008}
   m_CullTransparentMesh: 1
+--- !u!114 &2097635012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2097635008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf33ad3b0b548104b8dc4f0b939c82ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spritesBuilds:
+  - {fileID: 21300000, guid: 2d3a1d04dc99e6346ba04de5031908f8, type: 3}
+  - {fileID: 21300000, guid: 330371c5d6b147c48b86bfca723e3e1c, type: 3}
+  - {fileID: 21300000, guid: 090db214ccac04843b2b9ff9b9629378, type: 3}
+  - {fileID: 21300000, guid: 32aeabd31d0339b40a59d306458af4cb, type: 3}
+  - {fileID: 21300000, guid: 31dc0b60cc47fd3478ff78642dba57f4, type: 3}
+  - {fileID: 21300000, guid: cab160b6eaf185149acdba96f9c791e6, type: 3}
+  - {fileID: 21300000, guid: a4c7119c313b33440aced9d06f28a137, type: 3}
+  - {fileID: 21300000, guid: 9171df52f6eaed84eba13f6e0a03d813, type: 3}
+  - {fileID: 21300000, guid: 9756118edea7b8743a2103fdc6546c3b, type: 3}
+  - {fileID: 21300000, guid: a701536298160f1428af4f5c52320269, type: 3}
+  - {fileID: 21300000, guid: b8617b00f43b7cb4b9204ae06f389fbe, type: 3}
+  - {fileID: 21300000, guid: e677f52496cd3c84ab8197a16ee177fc, type: 3}
+  - {fileID: 21300000, guid: 56e69f6a3544e8f4caa2f1b06f7fb3b0, type: 3}
+  - {fileID: 21300000, guid: a701536298160f1428af4f5c52320269, type: 3}
 --- !u!1 &2132103463
 GameObject:
   m_ObjectHideFlags: 0

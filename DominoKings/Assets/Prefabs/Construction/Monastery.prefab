@@ -48,7 +48,7 @@ MonoBehaviour:
   buildID: 10
   nameRu: "\u041C\u043E\u043D\u0430\u0441\u0442\u044B\u0440\u044C"
   nameEn: Monastery
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: a701536298160f1428af4f5c52320269, type: 3}
   cntStars: 2
 --- !u!1 &7602712623959456476
 GameObject:
