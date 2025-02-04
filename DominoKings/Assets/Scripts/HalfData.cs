@@ -42,7 +42,7 @@ public class HalfData : MonoBehaviour
     {
         build = Instantiate(prefab);
         build.transform.parent = transform;
-        build.transform.localPosition = Vector3.zero;
+        build.transform.localPosition = new Vector3(0, 0.8f, 0);
         BuildID = build.GetComponent<ConstructionData>().BuildID;
     }
 
@@ -65,6 +65,11 @@ public class HalfData : MonoBehaviour
         numPos = pos;
     }
 
+    public void SetLevelControl(LevelControl lc)
+    {
+        levelControl = lc;
+    }
+
     public void SetNumPlayer(int num, Transform chip, LevelControl lc)
     {
         numPlayer = num;
@@ -78,7 +83,7 @@ public class HalfData : MonoBehaviour
         //print($"HalfTail isPole = {isPole}");
         if (isPole && Input.GetMouseButtonDown(0))
         {
-            levelControl.SetSelectHalfTail(LandID);
+            if (levelControl != null) levelControl.SetSelectHalfTail(LandID, BuildID);
         }
     }
 }

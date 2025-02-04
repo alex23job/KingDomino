@@ -13,6 +13,8 @@ public class UI_Control : MonoBehaviour
     [SerializeField] private ResPanControl rpcPlayer;
     [SerializeField] private ResPanControl rpcBot;
 
+    [SerializeField] private BuildPanelControl[] arPanels;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,8 +27,10 @@ public class UI_Control : MonoBehaviour
         
     }
 
-    public void ViewHintBuildPanel()
+    public void ViewHintBuildPanel(int landID, ResourseSet set, string nm1, string nm2)
     {
+        arPanels[0].SetParams(1, landID, set, nm1);
+        arPanels[1].SetParams(2, landID, set, nm2);
         hintBuildPanel.SetActive(true);
     }
 

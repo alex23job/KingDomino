@@ -38,7 +38,11 @@ public class LevelControl : MonoBehaviour
         poleTails[45] = Instantiate(halfTails[1], new Vector3(-0.5f, 0, 0.5f), Quaternion.identity);
         HalfData hd1 = poleTails[44].GetComponent<HalfData>();
         HalfData hd2 = poleTails[45].GetComponent<HalfData>();
+
         //  не забыть про построить на половинках замок и рынок
+        hd1.BuildComplete(builds[14]);
+        hd2.SetLevelControl(GetComponent<LevelControl>());
+        hd2.BuildComplete(builds[13]);
         hd1.SetIsPole(44);hd2.SetIsPole(45);
         arLos.Add(new Loskut(hd1));
         arLos.Add(new Loskut(hd2));
@@ -211,10 +215,23 @@ public class LevelControl : MonoBehaviour
         numStep = 0;
     }
 
-    public void SetSelectHalfTail(int landID)
+    public void SetSelectHalfTail(int landID, int buildID)
     {   //  не забыть про замок и рынок
         //print($"SetSelectHalfTail land={landID}");
-        ui_Control.ViewHintBuildPanel();
+        if (buildID != 0)
+        {   //  здание уже построено - может вывести инфу о нЄм?
+            if (buildID == 14)
+            {   //  чтобы оправдать рынок нужно сделать купи-продай ресурсы
+                print("ј это рынок ?");
+            }
+        }
+        else if (landID > 0 && landID < 8)
+        {
+            string nm1 = builds[ConstructionData.LandsBuilds[landID - 1][0] - 1].GetComponent<ConstructionData>().NameConstruction;
+            string nm2 = builds[ConstructionData.LandsBuilds[landID - 1][1] - 1].GetComponent<ConstructionData>().NameConstruction;
+            //print($"SetSelectHalfTail land={landID} {ConstructionData.LandsBuilds[landID - 1]} nm1={nm1} nm2={nm2}");
+            ui_Control.ViewHintBuildPanel(landID, playerRes, nm1, nm2);
+        }
     }
 
     public void SetSelectCard(GameObject go)
