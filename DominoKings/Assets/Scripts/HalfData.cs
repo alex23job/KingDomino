@@ -85,7 +85,7 @@ public class HalfData : MonoBehaviour
         //print($"HalfTail isPole = {isPole}");
         if (isPole && Input.GetMouseButtonDown(0))
         {
-            if (levelControl != null) levelControl.SetSelectHalfTail(LandID, BuildID, NumPos);
+            if (levelControl != null && numPlayer == 1) levelControl.SetSelectHalfTail(LandID, BuildID, NumPos);
         }
     }
 }

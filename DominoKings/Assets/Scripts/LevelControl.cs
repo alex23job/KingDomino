@@ -12,6 +12,7 @@ public class LevelControl : MonoBehaviour
     [SerializeField] private GameObject[] builds;
 
     [SerializeField] private GameObject chipRed, chipBlue;
+    [SerializeField] private GameObject cube;
 
     private List<GameObject> newTails;
     private List<int> numTail;
@@ -228,6 +229,7 @@ public class LevelControl : MonoBehaviour
         }
         else if (landID > 0 && landID < 8)
         {
+            cube.SetActive(true);
             numTailForBuild = numHalfTail;
             string nm1 = builds[ConstructionData.LandsBuilds[landID - 1][0] - 1].GetComponent<ConstructionData>().NameConstruction;
             string nm2 = builds[ConstructionData.LandsBuilds[landID - 1][1] - 1].GetComponent<ConstructionData>().NameConstruction;
@@ -239,12 +241,14 @@ public class LevelControl : MonoBehaviour
     public void OnClickExitHBP()
     {
         numTailForBuild = -1;
+        cube.SetActive(false);
     }
 
     public void OnClickBuildHBP(int zn)
     {
         HalfData hd = poleTails[numTailForBuild].GetComponent<HalfData>();
         hd.BuildComplete(builds[ConstructionData.LandsBuilds[hd.LandID - 1][zn] - 1]);
+        cube.SetActive(false);
     }
 
     public void SetSelectCard(GameObject go)
