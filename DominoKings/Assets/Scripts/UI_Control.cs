@@ -48,6 +48,12 @@ public class UI_Control : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    public void ViewNames(int sc1, int sc2)
+    {
+        rpcPlayer.ViewName($"{(Language.Instance.CurrentLanguage == "ru" ? "Âû" : "You")} : {sc1}");
+        rpcBot.ViewName($"{(Language.Instance.CurrentLanguage == "ru" ? "ÀÈ" : "AI")} : {sc2}");
+    }
+
     public void ViewResPlayer(ResourseSet set)
     {
         rpcPlayer.ViewAllResorses(set);

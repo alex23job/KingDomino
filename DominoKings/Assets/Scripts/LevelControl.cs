@@ -132,6 +132,18 @@ public class LevelControl : MonoBehaviour
         return true;
     }
 
+    private void CalcScore()
+    {
+        int sc1 = 0, sc2 = 0, count;
+        foreach(Loskut los in arLos)
+        {
+            count = los.CountBotHalf + los.CountPlayerHalf;
+            sc1 += count * (1 + los.GetStars(1));
+            sc2 += count * (1 + los.GetStars(2));
+        }
+        ui_Control.ViewNames(sc1, sc2);
+    }
+
     private void CalcResult()
     {
         ui_Control.ViewEndGamePanel(0, 0);
@@ -237,6 +249,7 @@ public class LevelControl : MonoBehaviour
         }
         CollectResoure(botRes, 2);
         numStep = 0;
+        CalcScore();
     }
 
     public void SetSelectHalfTail(int landID, int buildID, int numHalfTail)

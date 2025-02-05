@@ -24,6 +24,8 @@ public class HalfData : MonoBehaviour
     private GameObject build = null;
     public string NameConstruction { get { return (build != null) ? build.GetComponent<ConstructionData>().NameConstruction : ""; } }
 
+    public int Stars { get { return ((build != null) ? build.GetComponent<ConstructionData>().CountStars : 0); } }
+
     private bool isPole = false;
     private LevelControl levelControl = null;
 

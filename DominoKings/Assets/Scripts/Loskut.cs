@@ -29,6 +29,22 @@ namespace Assets.Scripts
         public int CountPlayerHalf {  get { return countPlayerHalf; } }
 
         public int LandID { get { return landID; } }
+
+        /// <summary>
+        /// Возвращает число звёзд у игрока или бота
+        /// </summary>
+        /// <param name="mode">Для кого считаем звёзды: 1 - Player, 2 - Bot</param>
+        /// <returns>число звёзд</returns>
+        public int GetStars(int mode)
+        {
+            int sumStars = 0;
+            foreach(HalfData hd in arHT)
+            {
+                if (mode == hd.NumPlayer) sumStars += hd.Stars;
+            }
+            return sumStars;
+        }
+
         public List<HalfData> GetAr()
         {
             return arHT;
