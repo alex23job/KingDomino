@@ -59,6 +59,8 @@ public class LevelControl : MonoBehaviour
         botRes = new ResourseSet(1, 10, 4, 2, 0, 0);
         ui_Control.ViewResPlayer(playerRes);
         ui_Control.ViewResBot(botRes);
+        ui_Control.ViewNames(0, 0);
+        ui_Control.ViewEndGamePanel(200, 154);
     }
 
     private void GenerateNumTails()
@@ -115,7 +117,7 @@ public class LevelControl : MonoBehaviour
         }
         if (TestEndGame())
         {
-            CalcResult();
+            Invoke("CalcResult", 1f);
         }
     }
 
@@ -146,7 +148,14 @@ public class LevelControl : MonoBehaviour
 
     private void CalcResult()
     {
-        ui_Control.ViewEndGamePanel(0, 0);
+        int sc1 = 0, sc2 = 0, count;
+        foreach (Loskut los in arLos)
+        {
+            count = los.CountBotHalf + los.CountPlayerHalf;
+            sc1 += count * (1 + los.GetStars(1));
+            sc2 += count * (1 + los.GetStars(2));
+        }
+        ui_Control.ViewEndGamePanel(sc1, sc2);
     }
 
     public GameObject SelectCard()

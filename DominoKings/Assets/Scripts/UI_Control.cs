@@ -8,6 +8,11 @@ using Assets.Scripts;
 public class UI_Control : MonoBehaviour
 {
     [SerializeField] private GameObject endGamePanel;
+    [SerializeField] private Text txtEndTitle;
+    [SerializeField] private Text txtEndDescr;
+    [SerializeField] private Text txtEndScorePlayer;
+    [SerializeField] private Text txtEndScoreBot;
+
     [SerializeField] private GameObject hintBuildPanel;
 
     [SerializeField] private ResPanControl rpcPlayer;
@@ -17,6 +22,8 @@ public class UI_Control : MonoBehaviour
 
     [SerializeField] private GameObject hintPanel;
     [SerializeField] private Text txtHint;
+
+    private Color colWin = new Color(0, 0.6f, 0.2f), colLoss = new Color(0.7f, 0.1f, 0), colDraw = new Color(0.4f, 0.1f, 0.7f);
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +46,66 @@ public class UI_Control : MonoBehaviour
 
     public void ViewEndGamePanel(int playerScore, int botScore)
     {
+        if (Language.Instance.CurrentLanguage == "ru")
+        {
+            txtEndScorePlayer.text = $"Вы : {playerScore}";
+            txtEndScoreBot.text = $"ИИ : {botScore}";
+        }
+        else
+        {
+            txtEndScorePlayer.text = $"You : {playerScore}";
+            txtEndScoreBot.text = $"AI : {botScore}";
+        }
+        txtEndDescr.color = colDraw;
+
+        if (playerScore < botScore)
+        {
+            txtEndScorePlayer.color = colLoss;
+            txtEndScoreBot.color = colWin;
+            txtEndTitle.color = colLoss;
+            if (Language.Instance.CurrentLanguage == "ru")
+            {
+                txtEndTitle.text = "Поражение ...";
+                txtEndDescr.text = "Соперник оказался сильнее! Но можно сыграть ещё раз!";
+            }
+            else
+            {
+                txtEndTitle.text = "Defeat ...";
+                txtEndDescr.text = "The opponent was stronger! But you can play it again!";
+            }
+        }
+        else if (playerScore > botScore)
+        {
+            txtEndScorePlayer.color = colWin;
+            txtEndScoreBot.color = colLoss;
+            txtEndTitle.color = colWin;
+            if (Language.Instance.CurrentLanguage == "ru")
+            {
+                txtEndTitle.text = "Победа !!!";
+                txtEndDescr.text = "ИИ Вас поздравляет, но в другой раз результат будет иной ...";
+            }
+            else
+            {
+                txtEndTitle.text = "Victory !!!";
+                txtEndDescr.text = "The AI congratulates you, but the result will be different next time...";
+            }
+        }
+        else
+        {
+            txtEndScorePlayer.color = colDraw;
+            txtEndScoreBot.color = colDraw;
+            txtEndTitle.color = colDraw;
+            if (Language.Instance.CurrentLanguage == "ru")
+            {
+                txtEndTitle.text = "Ничья !!!";
+                txtEndDescr.text = "Странно, но в этот раз ничья! ИИ предлагает сыграть ещё раз, чтобы определить кто сильнее ...";
+            }
+            else
+            {
+                txtEndTitle.text = "It's a draw !!!";
+                txtEndDescr.text = "Strangely, it's a draw this time! The AI suggests playing again to determine who is stronger...";
+            }
+        }
         endGamePanel.SetActive(true);
     }
 
@@ -51,7 +118,7 @@ public class UI_Control : MonoBehaviour
     public void ViewNames(int sc1, int sc2)
     {
         rpcPlayer.ViewName($"{(Language.Instance.CurrentLanguage == "ru" ? "Вы" : "You")} : {sc1}");
-        rpcBot.ViewName($"{(Language.Instance.CurrentLanguage == "ru" ? "АИ" : "AI")} : {sc2}");
+        rpcBot.ViewName($"{(Language.Instance.CurrentLanguage == "ru" ? "ИИ" : "AI")} : {sc2}");
     }
 
     public void ViewResPlayer(ResourseSet set)
