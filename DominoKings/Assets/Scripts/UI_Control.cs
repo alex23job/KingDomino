@@ -15,6 +15,9 @@ public class UI_Control : MonoBehaviour
 
     [SerializeField] private BuildPanelControl[] arPanels;
 
+    [SerializeField] private GameObject hintPanel;
+    [SerializeField] private Text txtHint;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,5 +56,11 @@ public class UI_Control : MonoBehaviour
     public void ViewResBot(ResourseSet set)
     {
         rpcBot.ViewAllResorses(set);
+    }
+
+    public void ViewMsgHint(string msg)
+    {
+        txtHint.text = msg;
+        hintPanel.SetActive(true);
     }
 }

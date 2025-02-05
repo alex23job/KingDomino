@@ -93,12 +93,7 @@ public class BuildPanelControl : MonoBehaviour
             arTxtPriceRes[4].color = playerRes.CountStone >= priceRes.CountStone ? colYes : colNo;
         }
         txtDescr.text = sb.ToString();
-        bool btnYes = true;
-        if (playerRes.CountMoney < priceRes.CountMoney) btnYes = false;
-        if (playerRes.CountFood < priceRes.CountFood) btnYes = false;
-        if (playerRes.CountTree < priceRes.CountTree) btnYes = false;
-        if (playerRes.CountIron < priceRes.CountIron) btnYes = false;
-        if (playerRes.CountStone < priceRes.CountStone) btnYes = false;
-        btnBuild.interactable = btnYes;
+
+        btnBuild.interactable = playerRes.CheckResourse(priceRes);
     }
 }

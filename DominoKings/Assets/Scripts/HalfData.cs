@@ -22,6 +22,7 @@ public class HalfData : MonoBehaviour
     public int NumPos { get { return numPos; } }
 
     private GameObject build = null;
+    public string NameConstruction { get { return (build != null) ? build.GetComponent<ConstructionData>().NameConstruction : ""; } }
 
     private bool isPole = false;
     private LevelControl levelControl = null;

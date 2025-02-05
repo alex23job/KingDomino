@@ -49,6 +49,25 @@ namespace Assets.Scripts
             countStone += stone;
         }
 
+        public void DecrResourse(ResourseSet set)
+        {
+            countMoney -= set.CountMoney;
+            countFood -= set.CountFood;
+            countTree -= set.CountTree;
+            countIron -= set.CountIron;
+            countStone -= set.CountStone;
+        }
+
+        public bool CheckResourse(ResourseSet set)
+        {
+            if (countMoney < set.CountMoney) return false;
+            if (countFood < set.CountFood) return false;
+            if (countTree < set.CountTree) return false;
+            if (countIron < set.CountIron) return false;
+            if (countStone < set.CountStone) return false;
+            return true;
+        }
+
         public override string ToString()
         {
             return $"m={countMoney} f={countFood} t={countTree} i={countIron} s={countStone}";

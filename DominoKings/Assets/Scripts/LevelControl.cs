@@ -147,8 +147,24 @@ public class LevelControl : MonoBehaviour
         else return null;
     }
 
+    public bool CheckSelectNewTail(int num)
+    {
+        foreach(GameObject go in newTails)
+        {
+            TailControl tc = go.GetComponent<TailControl>();
+            if (tc != null && tc.NumPlayer == num) return true;
+        }
+        return false;
+    }
+
     public void EndPlayerStep()
     {
+        if (CheckSelectNewTail(1) == false)
+        {
+            string msg = (Language.Instance.CurrentLanguage == "ru") ? "Карточка для следующего хода не выбрана ! Кликните по одной из свободных карточек ..." : "The card for the next move is not selected! Click on one of the free cards ...";
+            ui_Control.ViewMsgHint(msg);
+            return;
+        }
         numStep++;
         CollectResoure(playerRes, 1);
         int i, ln1 = 0, ln2 = 0;
@@ -213,6 +229,12 @@ public class LevelControl : MonoBehaviour
         {
             newTails[numCard].GetComponent<TailControl>().SetNumPlayer(2, chipRed);
         }
+        TailPos2 tpBuild = enemyAI.SelectBuildPos(botRes, arLos, poleTails);
+        print($"EndPlayerStep =>   tpBuild = << {tpBuild} >>");
+        if (tpBuild.hf1 != -1 && tpBuild.hf2 != -1)
+        {
+            EnemyBuilding(tpBuild.hf1, tpBuild.hf2);
+        }
         CollectResoure(botRes, 2);
         numStep = 0;
     }
@@ -222,6 +244,11 @@ public class LevelControl : MonoBehaviour
         //print($"SetSelectHalfTail land={landID}");
         if (buildID != 0)
         {   //  здание уже построено - может вывести инфу о нём?
+            if (buildID < 14)
+            {
+                string nmBuild = poleTails[numHalfTail].GetComponent<HalfData>().NameConstruction;
+                ui_Control.ViewMsgHint(BuildDescr(buildID, nmBuild));
+            }
             if (buildID == 14)
             {   //  чтобы оправдать рынок нужно сделать купи-продай ресурсы
                 print("А это рынок ?");
@@ -238,6 +265,29 @@ public class LevelControl : MonoBehaviour
         }
     }
 
+    private string BuildDescr(int buildID, string nm)
+    {
+        ResourseSet buildRes = ConstructionData.BuildResourses[buildID - 1];
+        StringBuilder sb = new StringBuilder();
+        if (Language.Instance.CurrentLanguage == "ru")
+        {
+            sb.Append($"Построенное здание {nm} производит: деньги +{buildRes.CountMoney}");
+            if (buildRes.CountFood > 0) sb.Append($", еда +{buildRes.CountFood}");
+            if (buildRes.CountTree > 0) sb.Append($", дерево +{buildRes.CountTree}");
+            if (buildRes.CountIron > 0) sb.Append($", железо +{buildRes.CountIron}");
+            if (buildRes.CountStone > 0) sb.Append($", камень +{buildRes.CountStone}");
+        }
+        else
+        {
+            sb.Append($"The constructed building {nm} produces: money +{buildRes.CountMoney}");
+            if (buildRes.CountFood > 0) sb.Append($", food +{buildRes.CountFood}");
+            if (buildRes.CountTree > 0) sb.Append($", tree +{buildRes.CountTree}");
+            if (buildRes.CountIron > 0) sb.Append($", iron +{buildRes.CountIron}");
+            if (buildRes.CountStone > 0) sb.Append($", stone +{buildRes.CountStone}");
+        }
+        return sb.ToString();
+    }
+
     public void OnClickExitHBP()
     {
         numTailForBuild = -1;
@@ -247,8 +297,27 @@ public class LevelControl : MonoBehaviour
     public void OnClickBuildHBP(int zn)
     {
         HalfData hd = poleTails[numTailForBuild].GetComponent<HalfData>();
-        hd.BuildComplete(builds[ConstructionData.LandsBuilds[hd.LandID - 1][zn] - 1]);
+        int index = ConstructionData.LandsBuilds[hd.LandID - 1][zn] - 1;
+        hd.BuildComplete(builds[index]);
+        playerRes.DecrResourse(ConstructionData.BuildPrice[index]);
+        ui_Control.ViewResPlayer(playerRes);
         cube.SetActive(false);
+        EndPlayerStep();
+    }
+
+    /// <summary>
+    /// Постройка здания Ботом
+    /// </summary>
+    /// <param name="numHalf">номер клетки</param>
+    /// <param name="zn">0 или 1 - какое из 2 возможных зданий строим</param>
+    public void EnemyBuilding(int numHalf, int zn)
+    {
+        HalfData hd = poleTails[numHalf].GetComponent<HalfData>();
+        int index = ConstructionData.LandsBuilds[hd.LandID - 1][zn] - 1;
+        hd.BuildComplete(builds[index]);
+        botRes.DecrResourse(ConstructionData.BuildPrice[index]);
+        ui_Control.ViewResPlayer(botRes);
+        //cube.SetActive(false);
     }
 
     public void SetSelectCard(GameObject go)

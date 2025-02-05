@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
+    private int[] arBuilds;
     // Start is called before the first frame update
     void Start()
     {
-        
+        arBuilds = new int[15] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     }
 
     // Update is called once per frame
@@ -17,6 +18,81 @@ public class EnemyAI : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Бот выбирает клетку для строительства здания
+    /// </summary>
+    /// <param name="botRes">имеющиеся ресурсы Бота</param>
+    /// <param name="arLos">массив лоскутов(областей) из половинок</param>
+    /// <param name="poleTails">массив всех половинок</param>
+    /// <returns>позиция половинки для постройки: клетка половинки, номер возможного здания 0 или 1,
+    /// число уже построенных таких зданий, местность половинки</returns>
+    public TailPos2 SelectBuildPos(ResourseSet botRes, List<Loskut> arLos, GameObject[] poleTails)
+    {
+        List<HalfData> ar;
+        List<TailPos2> candidat = new List<TailPos2>();
+        int b1, b2;
+        foreach(Loskut los in arLos)
+        {
+            if (los.CountBotHalf > 0)
+            {
+                ar = los.GetAr();
+                foreach(HalfData hd in ar)
+                {
+                    if ((hd.NumPlayer == 2) && (hd.BuildID == 0))
+                    {
+                        b1 = ConstructionData.LandsBuilds[los.LandID - 1][0];
+                        b2 = ConstructionData.LandsBuilds[los.LandID - 1][1];
+                        if (arBuilds[b1 - 1] == 0)
+                        {
+                            if (botRes.CheckResourse(ConstructionData.BuildPrice[b1 - 1]))
+                            {   //  ресурсов хватает -> строим тут
+                                return new TailPos2(hd.NumPos, 0, arBuilds[b1 - 1], los.LandID);
+                            }
+                        }
+                        else
+                        {
+                            if (arBuilds[b2 - 1] == 0)
+                            {
+                                if (botRes.CheckResourse(ConstructionData.BuildPrice[b2 - 1]))
+                                {   //  ресурсов хватает -> строим тут
+                                    return new TailPos2(hd.NumPos, 0, arBuilds[b2 - 1], los.LandID);
+                                }
+                            }
+                            //  Если дошли до сюда, то такие здания уже строились. Проверим наличие ресурсов для постройки и дабавим кандидатами.
+                            if (botRes.CheckResourse(ConstructionData.BuildPrice[b2 - 1])) candidat.Add(new TailPos2(hd.NumPos, 0, arBuilds[b1 - 1], los.LandID));
+                            if (botRes.CheckResourse(ConstructionData.BuildPrice[b1 - 1])) candidat.Add(new TailPos2(hd.NumPos, 1, arBuilds[b2 - 1], los.LandID));
+                        }
+                    }
+                }
+            }
+        }
+        //  Выбираем из клеток кандидатов для постройки вариант здания число которых меньше чем другие
+        int minBuild = 100, i, indexMin = 0;
+        for(i = 0; i < candidat.Count; i++)
+        {
+            if (candidat[i].countHalf < minBuild)
+            {
+                minBuild = candidat[i].countHalf; indexMin = i;
+            }
+        }
+        
+        if (minBuild < 100)
+        {
+            print($"candidat.Count={candidat.Count} candidat[0]={candidat[0]}");
+            return candidat[indexMin];
+        }
+        return new TailPos2(-1, -1);
+    }
+
+    /// <summary>
+    /// Выбор позиции для установки карточки
+    /// </summary>
+    /// <param name="land1">местность 1 половинки</param>
+    /// <param name="land2">местность 2 половинки</param>
+    /// <param name="pole">массив всех половинок</param>
+    /// <param name="arLos">массив всех лоскутов(областей) из половинок</param>
+    /// <returns>позиция карточки: клетка для 1 половинки, клетка для 2 половинки,
+    /// максимальное число соседних половинок, местность 1 половинки</returns>
     public TailPos2 SelectCardPos(int land1, int land2, int[] pole, List<Loskut> arLos)
     {
         print($"EnemyAI SelectCardPos l1={land1} l2={land2} cntLos={arLos.Count}");
