@@ -60,7 +60,7 @@ public class LevelControl : MonoBehaviour
         ui_Control.ViewResPlayer(playerRes);
         ui_Control.ViewResBot(botRes);
         ui_Control.ViewNames(0, 0);
-        ui_Control.ViewEndGamePanel(200, 154);
+        //ui_Control.ViewEndGamePanel(200, 154);
     }
 
     private void GenerateNumTails()
