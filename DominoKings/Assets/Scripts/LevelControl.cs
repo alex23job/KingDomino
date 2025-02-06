@@ -13,6 +13,7 @@ public class LevelControl : MonoBehaviour
 
     [SerializeField] private GameObject chipRed, chipBlue;
     [SerializeField] private GameObject cube;
+    [SerializeField] private Material selectHalfMat;
 
     private List<GameObject> newTails;
     private List<int> numTail;
@@ -54,6 +55,7 @@ public class LevelControl : MonoBehaviour
         }
         //GameObject chBlue = Instantiate(chipBlue), chRed = Instantiate(chipRed);
         newTails[0].GetComponent<TailControl>().SetNumPlayer(1, chipBlue);
+        newTails[0].GetComponent<TailControl>().SetHalfSelect(true, selectHalfMat);
         newTails[1].GetComponent<TailControl>().SetNumPlayer(2, chipRed);
         playerRes = new ResourseSet(1, 10, 4, 2, 0, 0);
         botRes = new ResourseSet(1, 10, 4, 2, 0, 0);
@@ -259,6 +261,12 @@ public class LevelControl : MonoBehaviour
         CollectResoure(botRes, 2);
         numStep = 0;
         CalcScore();
+
+        foreach(GameObject card in newTails)
+        {
+            tc = card.GetComponent<TailControl>();
+            if (tc.NumPlayer == 1) tc.SetHalfSelect(true, selectHalfMat);
+        }
     }
 
     public void SetSelectHalfTail(int landID, int buildID, int numHalfTail)
@@ -371,6 +379,7 @@ public class LevelControl : MonoBehaviour
             if (TestNeighboringCells(si1, si2, land1, land2))
             {   //  хот€ бы в одной из €чеек р€дом есть одинаковый ландшафт
                 //  и можно установить карточку как предлагает игрок
+                selectCard.gameObject.GetComponent<TailControl>().SetHalfSelect(false, selectHalfMat);
                 Vector3 pos = new Vector3((si1 % 10) - 5.5f, 0, 4.5f - si1 / 10);
                 h1.transform.parent = null;
                 poleTails[si1] = h1;

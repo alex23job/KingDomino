@@ -21,6 +21,8 @@ public class HalfData : MonoBehaviour
     private int numPos = -1;
     public int NumPos { get { return numPos; } }
 
+    private GameObject cubeSelect = null;
+
     private GameObject build = null;
     public string NameConstruction { get { return (build != null) ? build.GetComponent<ConstructionData>().NameConstruction : ""; } }
 
@@ -28,6 +30,19 @@ public class HalfData : MonoBehaviour
 
     private bool isPole = false;
     private LevelControl levelControl = null;
+    private float timer = 0.25f;
+    private bool isSelect = false;
+    private bool isView = false;
+
+    private void Awake()
+    {
+        GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        cube.transform.parent = transform;
+        cube.transform.localScale = new Vector3(1.08f, 0.1f, 1.08f);
+        cube.transform.localPosition = new Vector3(0, -0.1f, 0);
+        cubeSelect = cube;
+        cubeSelect.SetActive(false);
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +53,23 @@ public class HalfData : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (isSelect)
+        {
+            if (timer > 0) timer -= Time.deltaTime;
+            else
+            {
+                timer = 0.25f;
+                isView = !isView;
+                cubeSelect.SetActive(isView);
+            }
+        }
+    }
+
+    public void SetSelect(bool zn, Material mat)
+    {
+        isSelect = zn;
+        cubeSelect.GetComponent<MeshRenderer>().materials = new Material[] { mat };
+        if (isSelect == false) cubeSelect.SetActive(false);
     }
 
     public void BuildComplete(GameObject prefab)

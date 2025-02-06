@@ -13,6 +13,8 @@ public class TailControl : MonoBehaviour
     private int numPlayer = 0;
     private int landID_1 = 0, landID_2 = 0;
 
+    private Material mater = null;
+
     public int NumPlayer { get { return numPlayer; } }
 
     public Vector3 BeginPos { get { return beginPos; } }
@@ -60,6 +62,23 @@ public class TailControl : MonoBehaviour
         half2.transform.parent = go.transform;
         tailControl.SetHalfLands(prHt1.GetComponent<HalfData>().LandID, prHt2.GetComponent<HalfData>().LandID);
         return go;
+    }
+
+    private void SetHalfUnSelect()
+    {
+        Transform ch1 = transform.GetChild(0);
+        Transform ch2 = transform.GetChild(1);
+        ch1.gameObject.GetComponent<HalfData>().SetSelect(false, mater);
+        ch2.gameObject.GetComponent<HalfData>().SetSelect(false, mater);
+    }
+
+    public void SetHalfSelect(bool zn, Material mat)
+    {
+        mater = mat;
+        Transform ch1 = transform.GetChild(0);
+        Transform ch2 = transform.GetChild(1);
+        ch1.gameObject.GetComponent<HalfData>().SetSelect(zn, mat);
+        ch2.gameObject.GetComponent<HalfData>().SetSelect(zn, mat);
     }
 
     public void SetHalfLands(int land1, int land2)
@@ -154,6 +173,7 @@ public class TailControl : MonoBehaviour
         //print($"pos = {transform.position}    up");
         if (lc.UpSelectCard())
         {
+            //SetHalfUnSelect();
             Destroy(transform.gameObject);
         }
         else
