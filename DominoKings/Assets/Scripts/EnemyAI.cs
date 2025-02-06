@@ -148,13 +148,37 @@ public class EnemyAI : MonoBehaviour
         print($"SelectCardPos => tp2.count={ar.Count} tp2[0]=<< {(ar.Count > 0 ? ar[0] : "none ?")} >>  tp2[1]=<< {(ar.Count > 1 ? ar[1] : "none ?")} >>");
         if (land1 != land2)
         {   //  половинки карточки разные - добавляем значимость возможной пристыковки 2 половинки
-            foreach(TailPos2 tp in ar)
+            foreach (TailPos2 tp in ar)
             {
                 bool isAdding;
-                foreach(Loskut los in tmpLos)
+                foreach (Loskut los in tmpLos)
                 {
                     isAdding = false;
                     if (los.LandID != tp.land)
+                    {
+                        x = tp.hf2 % 10; y = tp.hf2 / 10;
+                        aH = los.GetAr();
+                        foreach (HalfData hd in aH)
+                        {
+                            if ((x > 0) && (tp.hf2 - 1 == hd.NumPos)) isAdding = true;
+                            if ((x < 0) && (tp.hf2 + 1 == hd.NumPos)) isAdding = true;
+                            if ((y > 0) && (tp.hf2 - 10 == hd.NumPos)) isAdding = true;
+                            if ((y < 0) && (tp.hf2 + 10 == hd.NumPos)) isAdding = true;
+                        }
+                    }
+                    if (isAdding) tp.countHalf += los.CountBotHalf;
+                }
+            }
+        }
+        if (land1 == land2)
+        {   //  половинки карточки одинаковые - добавляем значимость возможной пристыковки 2 половинки
+            foreach (TailPos2 tp in ar)
+            {
+                bool isAdding;
+                foreach (Loskut los in tmpLos)
+                {
+                    isAdding = false;
+                    if (los.LandID == tp.land)
                     {
                         x = tp.hf2 % 10; y = tp.hf2 / 10;
                         aH = los.GetAr();
@@ -196,6 +220,7 @@ public class EnemyAI : MonoBehaviour
         for (int k = 0; k < cards.Count; k++)
         {
             TailControl tc = cards[k].GetComponent<TailControl>();
+            if (tc.NumPlayer == 1) continue;
             for (int i = 0; i < 90; i++)
             {
                 if (pole[i] == 0)
