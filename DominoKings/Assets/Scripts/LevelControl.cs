@@ -22,6 +22,7 @@ public class LevelControl : MonoBehaviour
     private int numTailForBuild = -1;
 
     private int numStep = 0;
+    private bool isNoBuild = true;
 
     private GameObject selectCard = null;
 
@@ -245,7 +246,13 @@ public class LevelControl : MonoBehaviour
                 GenerateTail(indNew);
                 Destroy(tc.gameObject);
             }
-
+        }
+        else
+        {   //  Бот не может поставить свою карточку => отправим её назад в "колоду"
+            int indNew = Mathf.RoundToInt((tc.GetComponent<TailControl>().BeginPos.x + 5.375f) / 1.25f);
+            numTail.Add(10 * ln1 + ln2);    //  вернули карточку в массив выбора
+            Destroy(tc.gameObject);         //  удалили "плохую" карточку
+            GenerateTail(indNew);           //  сгенерили новую карточку
         }
         int numCard = enemyAI.GetNextTail(pole, newTails);
         if (numCard != -1)
@@ -259,7 +266,7 @@ public class LevelControl : MonoBehaviour
             EnemyBuilding(tpBuild.hf1, tpBuild.hf2);
         }
         CollectResoure(botRes, 2);
-        numStep = 0;
+        numStep = 0;isNoBuild = true;   //  ход Бота и весь ход завершён
         CalcScore();
 
         foreach(GameObject card in newTails)
@@ -284,7 +291,7 @@ public class LevelControl : MonoBehaviour
                 print("А это рынок ?");
             }
         }
-        else if (landID > 0 && landID < 8)
+        else if (landID > 0 && landID < 8 && isNoBuild)
         {
             cube.SetActive(true);
             numTailForBuild = numHalfTail;
@@ -324,6 +331,10 @@ public class LevelControl : MonoBehaviour
         cube.SetActive(false);
     }
 
+    /// <summary>
+    /// Постройка здания по выбору игрока
+    /// </summary>
+    /// <param name="zn">0 - левое, 1 - правое из двух для вида местности</param>
     public void OnClickBuildHBP(int zn)
     {
         HalfData hd = poleTails[numTailForBuild].GetComponent<HalfData>();
@@ -331,6 +342,7 @@ public class LevelControl : MonoBehaviour
         hd.BuildComplete(builds[index]);
         playerRes.DecrResourse(ConstructionData.BuildPrice[index]);
         ui_Control.ViewResPlayer(playerRes);
+        isNoBuild = false;  //  здание на этом ходу построено
         cube.SetActive(false);
         EndPlayerStep();
     }

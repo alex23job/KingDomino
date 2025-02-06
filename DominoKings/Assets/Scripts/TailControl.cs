@@ -89,6 +89,7 @@ public class TailControl : MonoBehaviour
 
     public void Rotate()
     {
+        if (NumPlayer == 2) return;
         Transform h1 = transform.GetChild(0), h2 = transform.GetChild(1);
         Vector3 pos1, pos2;
         if (h1.localPosition.x == 0)
@@ -156,6 +157,7 @@ public class TailControl : MonoBehaviour
             return;
         }
         //print($"pos = {transform.position}    down");
+        if (NumPlayer == 2) return;
         lc.SetSelectCard(transform.gameObject);
         if (Input.GetMouseButtonDown(0))
         {
