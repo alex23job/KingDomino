@@ -55,7 +55,26 @@ public class TailControl : MonoBehaviour
         go.AddComponent(typeof(BoxCollider));
         go.GetComponent<BoxCollider>().size = new Vector3(1f, 0.2f, 2f);
         Vector3 pos1 = pos, pos2 = pos;
-        pos1.z = 0.5f;pos2.z = -0.5f;
+        pos1.z = 0.5f; pos2.z = -0.5f;
+        GameObject half1 = Instantiate(prHt1, pos1, Quaternion.identity);
+        GameObject half2 = Instantiate(prHt2, pos2, Quaternion.identity);
+        half1.transform.parent = go.transform;
+        half2.transform.parent = go.transform;
+        tailControl.SetHalfLands(prHt1.GetComponent<HalfData>().LandID, prHt2.GetComponent<HalfData>().LandID);
+        return go;
+    }
+
+    public static GameObject GenerateAdsTail(GameObject prHt1, GameObject prHt2, Vector3 pos, LevelControl lc)
+    {
+        GameObject go = new GameObject();
+        go.transform.position = pos;
+        go.AddComponent(typeof(TailControl));
+        TailControl tailControl = go.GetComponent<TailControl>();
+        tailControl.SetParam(lc);
+        go.AddComponent(typeof(BoxCollider));
+        go.GetComponent<BoxCollider>().size = new Vector3(2f, 0.2f, 1f);
+        Vector3 pos1 = pos, pos2 = pos;
+        pos1.x += 0.5f; pos2.x += -0.5f;
         GameObject half1 = Instantiate(prHt1, pos1, Quaternion.identity);
         GameObject half2 = Instantiate(prHt2, pos2, Quaternion.identity);
         half1.transform.parent = go.transform;
@@ -89,52 +108,54 @@ public class TailControl : MonoBehaviour
 
     public void Rotate()
     {
-        if (NumPlayer == 2) return;
-        Transform h1 = transform.GetChild(0), h2 = transform.GetChild(1);
-        Vector3 pos1, pos2;
-        if (h1.localPosition.x == 0)
+        if (NumPlayer == 1)
         {
-            if (h1.localPosition.z == 0.5f)
+            Transform h1 = transform.GetChild(0), h2 = transform.GetChild(1);
+            Vector3 pos1, pos2;
+            if (h1.localPosition.x == 0)
             {
-                pos1 = h1.localPosition;
-                pos1.x = 0.5f; pos1.z = 0;
-                pos2 = h2.localPosition;
-                pos2.x = -0.5f; pos2.z = 0;
-                h1.localPosition = pos1;
-                h2.localPosition = pos2;
+                if (h1.localPosition.z == 0.5f)
+                {
+                    pos1 = h1.localPosition;
+                    pos1.x = 0.5f; pos1.z = 0;
+                    pos2 = h2.localPosition;
+                    pos2.x = -0.5f; pos2.z = 0;
+                    h1.localPosition = pos1;
+                    h2.localPosition = pos2;
+                }
+                else if (h1.localPosition.z == -0.5f)
+                {
+                    pos1 = h1.localPosition;
+                    pos1.x = -0.5f; pos1.z = 0;
+                    pos2 = h2.localPosition;
+                    pos2.x = 0.5f; pos2.z = 0;
+                    h1.localPosition = pos1;
+                    h2.localPosition = pos2;
+                }
+                return;
             }
-            else if (h1.localPosition.z == -0.5f)
+            if (h1.localPosition.z == 0)
             {
-                pos1 = h1.localPosition;
-                pos1.x = -0.5f; pos1.z = 0;
-                pos2 = h2.localPosition;
-                pos2.x = 0.5f; pos2.z = 0;
-                h1.localPosition = pos1;
-                h2.localPosition = pos2;
+                if (h1.localPosition.x == 0.5f)
+                {
+                    pos1 = h1.localPosition;
+                    pos1.z = -0.5f; pos1.x = 0;
+                    pos2 = h2.localPosition;
+                    pos2.z = 0.5f; pos2.x = 0;
+                    h1.localPosition = pos1;
+                    h2.localPosition = pos2;
+                }
+                else if (h1.localPosition.x == -0.5f)
+                {
+                    pos1 = h1.localPosition;
+                    pos1.z = 0.5f; pos1.x = 0;
+                    pos2 = h2.localPosition;
+                    pos2.z = -0.5f; pos2.x = 0;
+                    h1.localPosition = pos1;
+                    h2.localPosition = pos2;
+                }
+                //return;
             }
-            return;
-        }
-        if (h1.localPosition.z == 0)
-        {
-            if (h1.localPosition.x == 0.5f)
-            {
-                pos1 = h1.localPosition;
-                pos1.z = -0.5f; pos1.x = 0;
-                pos2 = h2.localPosition;
-                pos2.z = 0.5f; pos2.x = 0;
-                h1.localPosition = pos1;
-                h2.localPosition = pos2;
-            }
-            else if (h1.localPosition.x == -0.5f)
-            {
-                pos1 = h1.localPosition;
-                pos1.z = 0.5f; pos1.x = 0;
-                pos2 = h2.localPosition;
-                pos2.z = -0.5f; pos2.x = 0;
-                h1.localPosition = pos1;
-                h2.localPosition = pos2;
-            }
-            //return;
         }
     }
 

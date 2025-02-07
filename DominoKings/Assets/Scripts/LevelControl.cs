@@ -12,9 +12,11 @@ public class LevelControl : MonoBehaviour
     [SerializeField] private GameObject[] builds;
 
     [SerializeField] private GameObject chipRed, chipBlue;
+    [SerializeField] private GameObject adsRect;
     [SerializeField] private GameObject cube;
     [SerializeField] private Material selectHalfMat;
 
+    private List<GameObject> adsTails;
     private List<GameObject> newTails;
     private List<int> numTail;
     private GameObject[] poleTails;
@@ -122,6 +124,29 @@ public class LevelControl : MonoBehaviour
         {
             Invoke("CalcResult", 1f);
         }
+    }
+
+    public void Generate3AdsTail(int zn = 0)
+    {
+        adsRect.SetActive(true);
+        adsTails = new List<GameObject>();
+        for (int i = 0; i < 3; i++)
+        {
+            Vector3 pos = new Vector3(-4f + 3f * i, 2.1f, 0);
+            int num = Random.Range(0, numTail.Count);
+            int ht1 = numTail[num] / 10;
+            int ht2 = numTail[num] % 10;
+            //numTail.RemoveAt(num);
+            GameObject go = TailControl.GenerateAdsTail(halfTails[ht1], halfTails[ht2], pos, GetComponent<LevelControl>());
+            pos.z = 5f;
+            go.transform.position = pos;
+            adsTails.Add(go);
+        }
+    }
+
+    public void OnAdsClick()
+    {
+        Generate3AdsTail();
     }
 
     private bool TestEndGame()
