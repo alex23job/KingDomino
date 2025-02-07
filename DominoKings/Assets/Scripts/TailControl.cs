@@ -192,7 +192,7 @@ public class TailControl : MonoBehaviour
         {
             isMove = true;
             beginPos = transform.position;
-            print($"Tail OnMouseDown beginPos = {beginPos}");
+            //print($"Tail OnMouseDown beginPos = {beginPos}");
             Vector3 mp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             delta.x = transform.position.x - mp.x;
             delta.z = transform.position.z - mp.z;

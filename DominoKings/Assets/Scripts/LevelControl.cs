@@ -196,6 +196,7 @@ public class LevelControl : MonoBehaviour
         if (numStep == 1)
         {
             numStep++;
+            ui_Control.ViewHintBtnFone(true);
             return chipBlue;
         }
         else return null;
@@ -215,19 +216,19 @@ public class LevelControl : MonoBehaviour
                 break;
             }
         }
-        print($"MoveAdsSelectCard indexPlayerNewTail = {indexPlayerNewTail}");
+        //print($"MoveAdsSelectCard indexPlayerNewTail = {indexPlayerNewTail}");
         if (indexPlayerNewTail != -1)
         {
             card.transform.position = newTails[indexPlayerNewTail].transform.position;
-            print($"MoveAdsSelectCard 1  card.pos={card.transform.position}");
+            //print($"MoveAdsSelectCard 1  card.pos={card.transform.position}");
             if (tc != null) Destroy(newTails[indexPlayerNewTail].gameObject);
-            print($"MoveAdsSelectCard 2  card.pos={card.transform.position}  c0.pos={adsTails[0].transform.position}  c1.pos={adsTails[1].transform.position}  c2.pos={adsTails[2].transform.position}");
+            //print($"MoveAdsSelectCard 2  card.pos={card.transform.position}  c0.pos={adsTails[0].transform.position}  c1.pos={adsTails[1].transform.position}  c2.pos={adsTails[2].transform.position}");
             newTails[indexPlayerNewTail] = card;
             for(i = 0; i < 3; i++)
             {
                 if (adsTails[i].transform.position != card.transform.position) Destroy(adsTails[i]);
             }
-            print($"MoveAdsSelectCard 3  card.pos={card.transform.position}   card.beginPos = {card.GetComponent<TailControl>().BeginPos}");
+            //print($"MoveAdsSelectCard 3  card.pos={card.transform.position}   card.beginPos = {card.GetComponent<TailControl>().BeginPos}");
         }
         adsTails = null;
         card.GetComponent<TailControl>().SetHalfSelect(true, selectHalfMat);
@@ -253,6 +254,7 @@ public class LevelControl : MonoBehaviour
             return;
         }
         numStep++;
+        ui_Control.ViewHintBtnFone(false);
         CollectResoure(playerRes, 1);
         int i, ln1 = 0, ln2 = 0;
         TailControl tc = null;

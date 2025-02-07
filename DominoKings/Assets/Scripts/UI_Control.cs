@@ -23,7 +23,13 @@ public class UI_Control : MonoBehaviour
     [SerializeField] private GameObject hintPanel;
     [SerializeField] private Text txtHint;
 
+    [SerializeField] private GameObject hintBtnFone;
+
     private Color colWin = new Color(0, 0.6f, 0.2f), colLoss = new Color(0.7f, 0.1f, 0), colDraw = new Color(0.4f, 0.1f, 0.7f);
+
+    private float timer = 0.25f;
+    private bool isHintBtnNexBlinked = false;
+    private bool isHintBtnFone = false;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +40,22 @@ public class UI_Control : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (isHintBtnNexBlinked)
+        {
+            if (timer > 0) timer -= Time.deltaTime;
+            else
+            {
+                timer = 0.25f;
+                isHintBtnFone = !isHintBtnFone;
+                hintBtnFone.SetActive(isHintBtnFone);
+            }
+        }
+    }
+
+    public void ViewHintBtnFone(bool zn)
+    {
+        isHintBtnNexBlinked = zn;
+        if (zn == false) hintBtnFone.SetActive(false);
     }
 
     public void ViewHintBuildPanel(int landID, ResourseSet set, string nm1, string nm2)
