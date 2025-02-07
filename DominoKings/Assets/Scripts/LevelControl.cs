@@ -188,12 +188,50 @@ public class LevelControl : MonoBehaviour
 
     public GameObject SelectCard()
     {
+        if (numStep == 0)
+        {   //  ранее выбранную карточку некуда поставить и есть карточки за рекламу
+            //  из которых выбрали карточку для установки -> ею надо заменить неудачную, а лишние удалить
+            if (adsRect.activeInHierarchy) return chipBlue;
+        }
         if (numStep == 1)
         {
             numStep++;
             return chipBlue;
         }
         else return null;
+    }
+
+    public Vector3 MoveAdsSelectCard(GameObject card)
+    {
+        int i, indexPlayerNewTail = -1;
+        adsRect.SetActive(false);
+        TailControl tc = null;
+        for (i = 0; i < newTails.Count; i++)
+        {
+            tc = newTails[i].GetComponent<TailControl>();
+            if (tc.NumPlayer == 1)
+            {
+                indexPlayerNewTail = i;
+                break;
+            }
+        }
+        print($"MoveAdsSelectCard indexPlayerNewTail = {indexPlayerNewTail}");
+        if (indexPlayerNewTail != -1)
+        {
+            card.transform.position = newTails[indexPlayerNewTail].transform.position;
+            print($"MoveAdsSelectCard 1  card.pos={card.transform.position}");
+            if (tc != null) Destroy(newTails[indexPlayerNewTail].gameObject);
+            print($"MoveAdsSelectCard 2  card.pos={card.transform.position}  c0.pos={adsTails[0].transform.position}  c1.pos={adsTails[1].transform.position}  c2.pos={adsTails[2].transform.position}");
+            newTails[indexPlayerNewTail] = card;
+            for(i = 0; i < 3; i++)
+            {
+                if (adsTails[i].transform.position != card.transform.position) Destroy(adsTails[i]);
+            }
+            print($"MoveAdsSelectCard 3  card.pos={card.transform.position}   card.beginPos = {card.GetComponent<TailControl>().BeginPos}");
+        }
+        adsTails = null;
+        card.GetComponent<TailControl>().SetHalfSelect(true, selectHalfMat);
+        return card.transform.position;
     }
 
     public bool CheckSelectNewTail(int num)

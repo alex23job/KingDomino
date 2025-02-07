@@ -8,6 +8,7 @@ public class TailControl : MonoBehaviour
 
     private bool isOver = false;
     private bool isMove = false;
+    private bool isAds = false;
     private Vector3 delta = Vector3.zero;
     private Vector3 beginPos = Vector3.zero;
     private int numPlayer = 0;
@@ -70,7 +71,7 @@ public class TailControl : MonoBehaviour
         go.transform.position = pos;
         go.AddComponent(typeof(TailControl));
         TailControl tailControl = go.GetComponent<TailControl>();
-        tailControl.SetParam(lc);
+        tailControl.SetParam(lc, true);
         go.AddComponent(typeof(BoxCollider));
         go.GetComponent<BoxCollider>().size = new Vector3(2f, 0.2f, 1f);
         Vector3 pos1 = pos, pos2 = pos;
@@ -80,6 +81,7 @@ public class TailControl : MonoBehaviour
         half1.transform.parent = go.transform;
         half2.transform.parent = go.transform;
         tailControl.SetHalfLands(prHt1.GetComponent<HalfData>().LandID, prHt2.GetComponent<HalfData>().LandID);
+        
         return go;
     }
 
@@ -175,6 +177,12 @@ public class TailControl : MonoBehaviour
         {
             GameObject prefab = lc.SelectCard();
             if (prefab != null) SetNumPlayer(1, prefab);
+            if (isAds)
+            {
+                isAds = false;
+                Rotate();
+                beginPos = lc.MoveAdsSelectCard(transform.gameObject);
+            }
             return;
         }
         //print($"pos = {transform.position}    down");
@@ -184,6 +192,7 @@ public class TailControl : MonoBehaviour
         {
             isMove = true;
             beginPos = transform.position;
+            print($"Tail OnMouseDown beginPos = {beginPos}");
             Vector3 mp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             delta.x = transform.position.x - mp.x;
             delta.z = transform.position.z - mp.z;
@@ -210,9 +219,10 @@ public class TailControl : MonoBehaviour
         }
     }
 
-    public void SetParam(LevelControl levCntr)
+    public void SetParam(LevelControl levCntr, bool ads = false)
     {
         lc = levCntr;
+        isAds = ads;
     }
 
     public void SetNumPlayer(int num, GameObject prefab) 
