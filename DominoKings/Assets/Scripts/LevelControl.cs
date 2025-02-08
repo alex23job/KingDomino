@@ -354,6 +354,7 @@ public class LevelControl : MonoBehaviour
             if (buildID == 14)
             {   //  чтобы оправдать рынок нужно сделать купи-продай ресурсы
                 print("А это рынок ?");
+                ui_Control.ViewMarket(playerRes, playerRes);
             }
         }
         else if (landID > 0 && landID < 8 && isNoBuild)

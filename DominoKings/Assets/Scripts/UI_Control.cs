@@ -23,6 +23,8 @@ public class UI_Control : MonoBehaviour
     [SerializeField] private GameObject hintPanel;
     [SerializeField] private Text txtHint;
 
+    [SerializeField] private GameObject marketPanel;
+
     [SerializeField] private GameObject hintBtnFone;
 
     private Color colWin = new Color(0, 0.6f, 0.2f), colLoss = new Color(0.7f, 0.1f, 0), colDraw = new Color(0.4f, 0.1f, 0.7f);
@@ -50,6 +52,11 @@ public class UI_Control : MonoBehaviour
                 hintBtnFone.SetActive(isHintBtnFone);
             }
         }
+    }
+
+    public void ViewMarket(ResourseSet mrkSet, ResourseSet playerSet)
+    {
+        marketPanel.SetActive(true);
     }
 
     public void ViewHintBtnFone(bool zn)

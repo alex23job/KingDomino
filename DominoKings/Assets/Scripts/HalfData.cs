@@ -120,6 +120,7 @@ public class HalfData : MonoBehaviour
         if (isPole && Input.GetMouseButtonDown(0))
         {
             if (levelControl != null && numPlayer == 1) levelControl.SetSelectHalfTail(LandID, BuildID, NumPos);
+            if (levelControl != null && BuildID == 14) levelControl.SetSelectHalfTail(LandID, BuildID, NumPos);
         }
     }
 }

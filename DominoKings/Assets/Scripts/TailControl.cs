@@ -40,7 +40,7 @@ public class TailControl : MonoBehaviour
         if (isMove)
         {
             Vector3 mp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            if (delta != mp) print($"Input.mousePosition={Input.mousePosition} mp={mp}");
+            //if (delta != mp) print($"Input.mousePosition={Input.mousePosition} mp={mp}");
             //Vector3 mp = Input.mousePosition;
             Vector3 figPos = transform.position;
             //figPos.x = mp.x + delta.x; figPos.z = mp.z + delta.z;
