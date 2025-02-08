@@ -40,9 +40,13 @@ public class TailControl : MonoBehaviour
         if (isMove)
         {
             Vector3 mp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            if (delta != mp) print($"Input.mousePosition={Input.mousePosition} mp={mp}");
+            //Vector3 mp = Input.mousePosition;
             Vector3 figPos = transform.position;
-            figPos.x = mp.x + delta.x; figPos.z = mp.z + delta.z;
+            //figPos.x = mp.x + delta.x; figPos.z = mp.z + delta.z;
+            figPos.x += mp.x - delta.x; figPos.z += 1.35f * (mp.z - delta.z);
             transform.position = figPos;
+            delta = mp;
         }
     }
 
@@ -194,8 +198,11 @@ public class TailControl : MonoBehaviour
             beginPos = transform.position;
             //print($"Tail OnMouseDown beginPos = {beginPos}");
             Vector3 mp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            delta.x = transform.position.x - mp.x;
-            delta.z = transform.position.z - mp.z;
+            //delta = Input.mousePosition;
+            //print($"Tail OnMouseDown beginPos = {beginPos}    mousePos = {mp}");
+            //delta.x = transform.position.x - mp.x;
+            //delta.z = transform.position.z - mp.z;
+            delta = mp;
         }
     }
 
