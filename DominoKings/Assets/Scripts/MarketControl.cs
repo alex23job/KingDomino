@@ -12,7 +12,9 @@ public class MarketControl : MonoBehaviour
     [SerializeField] private Text txtCount;
     [SerializeField] private Toggle[] toggles;
 
+    private ResourseSet marketSet = null, playerSet = null;
     private int count = 0;
+    private int currentIndTgMrk = -1, currentIndTgPl = -1;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +29,8 @@ public class MarketControl : MonoBehaviour
 
     public void ViewResourse(ResourseSet mrk, ResourseSet pl)
     {
+        marketSet = mrk;
+        playerSet = pl;
         arTxtRes[0].text = mrk.CountMoney.ToString();
         arTxtRes[1].text = mrk.CountFood.ToString();
         arTxtRes[2].text = mrk.CountTree.ToString();
@@ -40,5 +44,33 @@ public class MarketControl : MonoBehaviour
         btnDec.interactable = false;
         txtCount.text = count.ToString();
         foreach (Toggle tg in toggles) tg.isOn = false;
+    }
+
+    public void OnClickInc()
+    {
+
+    }
+
+    public void OnClickDec()
+    {
+
+    }
+
+    public void OnClickExchange()
+    {
+       
+    }
+
+    public void OnToggleChange(int n)
+    {
+        print($"n={n}  curIndTgMrk={currentIndTgMrk}  curIndTgPl={currentIndTgPl}");
+        if (n >= 0 && n < 5)
+        {
+            currentIndTgMrk = n;
+        }
+        if (n >= 5 && n < 10)
+        {
+            currentIndTgPl = n;
+        }
     }
 }

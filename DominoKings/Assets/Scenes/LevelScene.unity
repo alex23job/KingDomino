@@ -4665,7 +4665,19 @@ MonoBehaviour:
   m_Group: {fileID: 2011697308}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1907952167}
+        m_TargetAssemblyTypeName: MarketControl, Assembly-CSharp
+        m_MethodName: OnToggleChange
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 5
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!1 &621683319
 GameObject:
@@ -4845,7 +4857,19 @@ MonoBehaviour:
   m_Group: {fileID: 2011697308}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1907952167}
+        m_TargetAssemblyTypeName: MarketControl, Assembly-CSharp
+        m_MethodName: OnToggleChange
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 9
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!1 &641765252
 GameObject:
@@ -5100,7 +5124,19 @@ MonoBehaviour:
   m_Group: {fileID: 733678810}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1907952167}
+        m_TargetAssemblyTypeName: MarketControl, Assembly-CSharp
+        m_MethodName: OnToggleChange
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!1 &656920850
 GameObject:
@@ -5980,7 +6016,19 @@ MonoBehaviour:
   m_Group: {fileID: 733678810}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1907952167}
+        m_TargetAssemblyTypeName: MarketControl, Assembly-CSharp
+        m_MethodName: OnToggleChange
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!114 &733678810
 MonoBehaviour:
@@ -6718,7 +6766,19 @@ MonoBehaviour:
   m_Group: {fileID: 733678810}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1907952167}
+        m_TargetAssemblyTypeName: MarketControl, Assembly-CSharp
+        m_MethodName: OnToggleChange
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!1 &820357480
 GameObject:
@@ -6882,7 +6942,19 @@ MonoBehaviour:
   m_Group: {fileID: 2011697308}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1907952167}
+        m_TargetAssemblyTypeName: MarketControl, Assembly-CSharp
+        m_MethodName: OnToggleChange
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 7
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!1 &821511642
 GameObject:
@@ -8633,7 +8705,19 @@ MonoBehaviour:
   m_Group: {fileID: 733678810}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1907952167}
+        m_TargetAssemblyTypeName: MarketControl, Assembly-CSharp
+        m_MethodName: OnToggleChange
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!1 &986225757
 GameObject:
@@ -12952,7 +13036,19 @@ MonoBehaviour:
   m_Group: {fileID: 733678810}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1907952167}
+        m_TargetAssemblyTypeName: MarketControl, Assembly-CSharp
+        m_MethodName: OnToggleChange
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!1 &1763916838
 GameObject:
@@ -14528,7 +14624,19 @@ MonoBehaviour:
   m_Group: {fileID: 2011697308}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1907952167}
+        m_TargetAssemblyTypeName: MarketControl, Assembly-CSharp
+        m_MethodName: OnToggleChange
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 8
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!224 &2011697310
 RectTransform:
@@ -15096,7 +15204,19 @@ MonoBehaviour:
   m_Group: {fileID: 2011697308}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1907952167}
+        m_TargetAssemblyTypeName: MarketControl, Assembly-CSharp
+        m_MethodName: OnToggleChange
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 6
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!1 &2083539426
 GameObject:
