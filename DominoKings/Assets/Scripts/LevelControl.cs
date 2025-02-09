@@ -29,6 +29,7 @@ public class LevelControl : MonoBehaviour
     private GameObject selectCard = null;
 
     private ResourseSet playerRes, botRes;
+    private ResourseSet marketRes;
 
     private List<Loskut> arLos = new List<Loskut>();
 
@@ -62,6 +63,7 @@ public class LevelControl : MonoBehaviour
         newTails[1].GetComponent<TailControl>().SetNumPlayer(2, chipRed);
         playerRes = new ResourseSet(1, 10, 4, 2, 0, 0);
         botRes = new ResourseSet(1, 10, 4, 2, 0, 0);
+        marketRes = new ResourseSet(1, 100, 10, 10, 10, 10);
         ui_Control.ViewResPlayer(playerRes);
         ui_Control.ViewResBot(botRes);
         ui_Control.ViewNames(0, 0);
@@ -354,7 +356,7 @@ public class LevelControl : MonoBehaviour
             if (buildID == 14)
             {   //  чтобы оправдать рынок нужно сделать купи-продай ресурсы
                 print("А это рынок ?");
-                ui_Control.ViewMarket(playerRes, playerRes);
+                ui_Control.ViewMarket(marketRes, playerRes);
             }
         }
         else if (landID > 0 && landID < 8 && isNoBuild)

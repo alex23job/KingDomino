@@ -24,6 +24,7 @@ public class UI_Control : MonoBehaviour
     [SerializeField] private Text txtHint;
 
     [SerializeField] private GameObject marketPanel;
+    [SerializeField] private MarketControl marketControl;
 
     [SerializeField] private GameObject hintBtnFone;
 
@@ -56,6 +57,7 @@ public class UI_Control : MonoBehaviour
 
     public void ViewMarket(ResourseSet mrkSet, ResourseSet playerSet)
     {
+        marketControl.ViewResourse(mrkSet, playerSet);
         marketPanel.SetActive(true);
     }
 
