@@ -25,6 +25,7 @@ public class LevelControl : MonoBehaviour
 
     private int numStep = 0;
     private bool isNoBuild = true;
+    private bool isCardPut = false;
 
     private GameObject selectCard = null;
 
@@ -255,6 +256,12 @@ public class LevelControl : MonoBehaviour
             ui_Control.ViewMsgHint(msg);
             return;
         }
+        if (isCardPut == false)
+        {
+            string msg = (Language.Instance.CurrentLanguage == "ru") ? "Выставьте карточку на поле ! Далее кликните по своему участку местности чтобы построить здание ..." : "Put the card on the field! Next, click on your area to build a building ...";
+            ui_Control.ViewMsgHint(msg);
+            return;
+        }
         numStep++;
         ui_Control.ViewHintBtnFone(false);
         CollectResoure(playerRes, 1);
@@ -341,6 +348,7 @@ public class LevelControl : MonoBehaviour
             tc = card.GetComponent<TailControl>();
             if (tc.NumPlayer == 1) tc.SetHalfSelect(true, selectHalfMat);
         }
+        isCardPut = false;
     }
 
     public void SetSelectHalfTail(int landID, int buildID, int numHalfTail)
@@ -484,6 +492,7 @@ public class LevelControl : MonoBehaviour
                 GenerateTail(indNew);
                 Destroy(selectCard);
                 numStep++;
+                isCardPut = true;
             }
             else res = false;
         }

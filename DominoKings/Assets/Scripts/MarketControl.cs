@@ -110,17 +110,18 @@ public class MarketControl : MonoBehaviour
     }
 
     public void OnClickExchange()
-    {        
-        int[] mrkAr = new int[5], plAr = new int[5];
-        int[] mrkTmp = marketSet.GetArResourses(), plTmp = playerSet.GetArResourses();
-        for(int i = 0; i < 5; i++)
+    {
+        //int[] mrkAr = new int[5], plAr = new int[5];
+        //int[] mrkTmp = marketSet.GetArResourses(), plTmp = playerSet.GetArResourses();
+        int[] mrkAr = marketSet.GetArResourses(), plAr = playerSet.GetArResourses();
+        /*for (int i = 0; i < 5; i++)
         {
             mrkAr[i] = mrkTmp[i];
             plAr[i] = plTmp[i];
-        }
+        }*/
         if ((currentIndTgMrk >= 0 && currentIndTgMrk < 5) && (currentIndTgPl >= 5 && currentIndTgPl < 10))
         {
-            print($"OnClickExchange  mode={mode}  count={count}  curIndTgMrk={currentIndTgMrk}  curIndTgPl={currentIndTgPl}");
+            //print($"OnClickExchange  mode={mode}  count={count}  curIndTgMrk={currentIndTgMrk}  curIndTgPl={currentIndTgPl}");
             if (mode == 1)
             {
                 mrkAr[0] += count;
@@ -131,7 +132,7 @@ public class MarketControl : MonoBehaviour
                 arTxtRes[currentIndTgMrk % 5].text = mrkAr[currentIndTgMrk % 5].ToString();
                 arTxtRes[5].text = plAr[0].ToString();
                 arTxtRes[currentIndTgMrk + 5].text = plAr[currentIndTgMrk % 5].ToString();
-                print($"OnClickExchange  купить  mkrAr<<{mrkAr[0]} {mrkAr[1]} {mrkAr[2]} {mrkAr[3]} {mrkAr[4]}>>  plAr<<{plAr[0]} {plAr[1]} {plAr[2]} {plAr[3]} {plAr[4]}>>");
+                //print($"OnClickExchange  купить  mkrAr<<{mrkAr[0]} {mrkAr[1]} {mrkAr[2]} {mrkAr[3]} {mrkAr[4]}>>  plAr<<{plAr[0]} {plAr[1]} {plAr[2]} {plAr[3]} {plAr[4]}>>");
             }
             if (mode == 2)
             {
@@ -143,7 +144,7 @@ public class MarketControl : MonoBehaviour
                 arTxtRes[currentIndTgPl % 5].text = mrkAr[currentIndTgPl % 5].ToString();
                 arTxtRes[5].text = plAr[0].ToString();
                 arTxtRes[currentIndTgPl].text = plAr[currentIndTgPl % 5].ToString();
-                print($"OnClickExchange  Продать  mkrAr<<{mrkAr[0]} {mrkAr[1]} {mrkAr[2]} {mrkAr[3]} {mrkAr[4]}>>  plAr<<{plAr[0]} {plAr[1]} {plAr[2]} {plAr[3]} {plAr[4]}>>");
+                //print($"OnClickExchange  Продать  mkrAr<<{mrkAr[0]} {mrkAr[1]} {mrkAr[2]} {mrkAr[3]} {mrkAr[4]}>>  plAr<<{plAr[0]} {plAr[1]} {plAr[2]} {plAr[3]} {plAr[4]}>>");
             }
             if (mode == 3)
             {
@@ -155,11 +156,11 @@ public class MarketControl : MonoBehaviour
                 arTxtRes[currentIndTgPl % 5].text = mrkAr[currentIndTgPl % 5].ToString();
                 arTxtRes[currentIndTgMrk + 5].text = plAr[currentIndTgMrk].ToString();
                 arTxtRes[currentIndTgPl].text = plAr[currentIndTgPl % 5].ToString();
-                print($"OnClickExchange  менять  mkrAr<<{mrkAr[0]} {mrkAr[1]} {mrkAr[2]} {mrkAr[3]} {mrkAr[4]}>>  plAr<<{plAr[0]} {plAr[1]} {plAr[2]} {plAr[3]} {plAr[4]}>>");
+                //print($"OnClickExchange  менять  mkrAr<<{mrkAr[0]} {mrkAr[1]} {mrkAr[2]} {mrkAr[3]} {mrkAr[4]}>>  plAr<<{plAr[0]} {plAr[1]} {plAr[2]} {plAr[3]} {plAr[4]}>>");
             }
             marketSet.InitArResourse(mrkAr);
             playerSet.InitArResourse(plAr);
-            print($"OnClickExchange  mrkRes={marketSet}  plRes={playerSet}  mkrAr<<{mrkAr[0]} {mrkAr[1]} {mrkAr[2]} {mrkAr[3]} {mrkAr[4]}>>  plAr<<{plAr[0]} {plAr[1]} {plAr[2]} {plAr[3]} {plAr[4]}>>");
+            //print($"OnClickExchange  mrkRes={marketSet}  plRes={playerSet}  mkrAr<<{mrkAr[0]} {mrkAr[1]} {mrkAr[2]} {mrkAr[3]} {mrkAr[4]}>>  plAr<<{plAr[0]} {plAr[1]} {plAr[2]} {plAr[3]} {plAr[4]}>>");
             playerResPanControl.ViewAllResorses(playerSet);
         }
     }
