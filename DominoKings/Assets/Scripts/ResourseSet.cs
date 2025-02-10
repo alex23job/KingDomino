@@ -68,6 +68,24 @@ namespace Assets.Scripts
             return true;
         }
 
+        public int[] GetArResourses()
+        {
+            int[] ar = new int[5] { countMoney, countFood, countTree, countIron, countStone};
+            return ar;
+        }
+
+        public void InitArResourse(int[] ar)
+        {
+            if (ar.Length == 5)
+            {
+                countMoney = ar[0];
+                countFood = ar[1];
+                countTree = ar[2];
+                countIron = ar[3];
+                countStone = ar[4];
+            }
+        }
+
         public override string ToString()
         {
             return $"m={countMoney} f={countFood} t={countTree} i={countIron} s={countStone}";

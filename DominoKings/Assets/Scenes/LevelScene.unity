@@ -2422,7 +2422,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 284787790}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1907952167}
+        m_TargetAssemblyTypeName: MarketControl, Assembly-CSharp
+        m_MethodName: OnClickDec
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &284787790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10623,7 +10635,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1398200269}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1907952167}
+        m_TargetAssemblyTypeName: MarketControl, Assembly-CSharp
+        m_MethodName: OnClickExchange
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1398200269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14176,6 +14200,7 @@ MonoBehaviour:
   - {fileID: 821465396}
   - {fileID: 2011697309}
   - {fileID: 640504171}
+  playerResPanControl: {fileID: 856974793}
 --- !u!1001 &1938221531
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15003,7 +15028,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2058848952}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1907952167}
+        m_TargetAssemblyTypeName: MarketControl, Assembly-CSharp
+        m_MethodName: OnClickInc
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2058848952
 MonoBehaviour:
   m_ObjectHideFlags: 0
