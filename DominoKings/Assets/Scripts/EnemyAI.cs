@@ -15,7 +15,7 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     /// <summary>
@@ -31,12 +31,12 @@ public class EnemyAI : MonoBehaviour
         List<HalfData> ar;
         List<TailPos2> candidat = new List<TailPos2>();
         int b1, b2;
-        foreach(Loskut los in arLos)
+        foreach (Loskut los in arLos)
         {
             if (los.CountBotHalf > 0)
             {
                 ar = los.GetAr();
-                foreach(HalfData hd in ar)
+                foreach (HalfData hd in ar)
                 {
                     if ((hd.NumPlayer == 2) && (hd.BuildID == 0))
                     {
@@ -68,14 +68,14 @@ public class EnemyAI : MonoBehaviour
         }
         //  ¬ыбираем из клеток кандидатов дл€ постройки вариант здани€ число которых меньше чем другие
         int minBuild = 100, i, indexMin = 0;
-        for(i = 0; i < candidat.Count; i++)
+        for (i = 0; i < candidat.Count; i++)
         {
             if (candidat[i].countHalf < minBuild)
             {
                 minBuild = candidat[i].countHalf; indexMin = i;
             }
         }
-        
+
         if (minBuild < 100)
         {
             print($"candidat.Count={candidat.Count} candidat[0]={candidat[0]}");
@@ -99,7 +99,7 @@ public class EnemyAI : MonoBehaviour
         List<TailPos2> ar = new List<TailPos2>();
         List<Loskut> tmpLos = new List<Loskut>();
 
-        foreach(Loskut los in arLos)
+        foreach (Loskut los in arLos)
         {
             if (land1 == los.LandID)
             {
@@ -113,7 +113,7 @@ public class EnemyAI : MonoBehaviour
         if (tmpLos.Count > 0) print($"tmpLos.Count={tmpLos.Count}    tmpLos[0]=<< {tmpLos[0]} >>");
         List<HalfData> aH;
         int x, y;
-        foreach(Loskut los in tmpLos)
+        foreach (Loskut los in tmpLos)
         {   //  собираем в массив возможные варианты установки карты р€дом с зан€той клеткой такой же местности
             aH = los.GetAr();
             foreach (HalfData hd in aH)
@@ -196,7 +196,7 @@ public class EnemyAI : MonoBehaviour
         }
         int maxCountBotHalf = -1;
         TailPos2 res = new TailPos2(-1, -1, 0, 0);
-        foreach(TailPos2 tp in ar)
+        foreach (TailPos2 tp in ar)
         {
             if (maxCountBotHalf < tp.countHalf)
             {
@@ -259,4 +259,25 @@ public class EnemyAI : MonoBehaviour
         if ((y2 < 9) && (y2 > y1) && (zn2 == pole[i2 + 10])) return true;   //  снизу такой же ландшафт
         return false;
     }
+
+    public bool SellResourse(ResourseSet mrkRes, ResourseSet botRes)
+    {
+        bool res = false;
+        int coins = 0;
+        ResourseSet changeSet = new ResourseSet(-1);
+        if (botRes.CountFood > 20) { changeSet.AddResourse(0, botRes.CountFood - 20, 0, 0, 0); coins += botRes.CountFood - 20; }
+        if (botRes.CountTree > 20) {changeSet.AddResourse(0, 0, botRes.CountTree - 20, 0, 0); coins += botRes.CountTree - 20; }
+        if (botRes.CountIron > 20) {changeSet.AddResourse(0, 0, 0, botRes.CountIron - 20, 0); coins += botRes.CountIron - 20; }
+        if (botRes.CountStone > 20) {changeSet.AddResourse(0, 0, 0, 0, botRes.CountStone - 20); coins += botRes.CountStone - 20; }
+
+        if (coins > 0)
+        {
+            changeSet.AddResourse(-coins, 0, 0, 0, 0);
+            mrkRes.DecrResourse(changeSet);
+            botRes.AddResourse(new ResourseSet(-1, coins, 0, 0, 0, 0));
+            res = true;
+        }
+        return res;
+    }
 }
+

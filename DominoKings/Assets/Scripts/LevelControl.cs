@@ -340,6 +340,7 @@ public class LevelControl : MonoBehaviour
             EnemyBuilding(tpBuild.hf1, tpBuild.hf2);
         }
         CollectResoure(botRes, 2);
+        if (enemyAI.SellResourse(marketRes, botRes)) ui_Control.ViewResBot(botRes);
         numStep = 0;isNoBuild = true;   //  ход Бота и весь ход завершён
         CalcScore();
 

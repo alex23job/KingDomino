@@ -28,6 +28,8 @@ public class UI_Control : MonoBehaviour
 
     [SerializeField] private GameObject hintBtnFone;
 
+    [SerializeField] private Image imgSoundCross;
+
     private Color colWin = new Color(0, 0.6f, 0.2f), colLoss = new Color(0.7f, 0.1f, 0), colDraw = new Color(0.4f, 0.1f, 0.7f);
 
     private float timer = 0.25f;
@@ -139,6 +141,27 @@ public class UI_Control : MonoBehaviour
         endGamePanel.SetActive(true);
     }
 
+    public void OnClickHelp()
+    {
+
+    }
+
+    public void OnClickSound()
+    {
+        if (imgSoundCross.gameObject.activeInHierarchy)
+        {   //  включить звук
+            imgSoundCross.gameObject.SetActive(false);
+        }
+        else
+        {   //  выключить звук
+            imgSoundCross.gameObject.SetActive(true);
+        }
+    }
+
+    public void LoadMenu()
+    {
+        SceneManager.LoadScene("MenuScene");
+    }
     public void Restart()
     {
         endGamePanel.SetActive(false);
