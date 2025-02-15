@@ -9,6 +9,8 @@ public class SoundPanelControl : MonoBehaviour
     [SerializeField] private Toggle toggle;
     [SerializeField] private Image redCross;
 
+    [SerializeField] private AudioSource fone;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,10 +22,12 @@ public class SoundPanelControl : MonoBehaviour
         if (toggle.isOn)
         {
             redCross.gameObject.SetActive(false);
+            fone.Play();
         }
         else
         {
             redCross.gameObject.SetActive(true);
+            fone.Pause();
         }
     }
 
@@ -34,5 +38,19 @@ public class SoundPanelControl : MonoBehaviour
             toggle.isOn = true;
             redCross.gameObject.SetActive(false);
         }
+        fone.volume = slider.value;
+    }
+
+    public void UpdateSound()
+    {
+        toggle.isOn = GameManager.Instance.currentPlayer.isSoundFone;
+        slider.value = (float)GameManager.Instance.currentPlayer.volumeFone / 100.0f;
+    }
+
+    public void OnClickExit()
+    {
+        GameManager.Instance.currentPlayer.isSoundFone = toggle.isOn;
+        GameManager.Instance.currentPlayer.volumeFone = (int)(slider.value * 100);
+        GameManager.Instance.SaveGame();
     }
 }

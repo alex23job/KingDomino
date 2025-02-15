@@ -12,6 +12,7 @@ public class UI_Control : MonoBehaviour
     [SerializeField] private Text txtEndDescr;
     [SerializeField] private Text txtEndScorePlayer;
     [SerializeField] private Text txtEndScoreBot;
+    [SerializeField] private Button btnRewAds;
 
     [SerializeField] private GameObject hintBuildPanel;
 
@@ -29,6 +30,7 @@ public class UI_Control : MonoBehaviour
     [SerializeField] private GameObject hintBtnFone;
 
     [SerializeField] private Image imgSoundCross;
+    [SerializeField] private AudioSource foneMusic;
 
     private Color colWin = new Color(0, 0.6f, 0.2f), colLoss = new Color(0.7f, 0.1f, 0), colDraw = new Color(0.4f, 0.1f, 0.7f);
 
@@ -39,7 +41,8 @@ public class UI_Control : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        foneMusic.volume = (float)GameManager.Instance.currentPlayer.volumeFone / 100.0f;
+        if (GameManager.Instance.currentPlayer.isSoundFone) foneMusic.Play();
     }
 
     // Update is called once per frame
@@ -55,6 +58,11 @@ public class UI_Control : MonoBehaviour
                 hintBtnFone.SetActive(isHintBtnFone);
             }
         }
+    }
+
+    public void UpdateBtnRewAds(bool zn)
+    {
+        btnRewAds.interactable = zn;
     }
 
     public void ViewMarket(ResourseSet mrkSet, ResourseSet playerSet)
@@ -90,6 +98,11 @@ public class UI_Control : MonoBehaviour
         }
         txtEndDescr.color = colDraw;
 
+        GameManager.Instance.currentPlayer.countBattle++;
+        GameManager.Instance.currentPlayer.currentScore = playerScore;
+        GameManager.Instance.currentPlayer.LevelComplete();
+        GameManager.Instance.SaveGame();
+
         if (playerScore < botScore)
         {
             txtEndScorePlayer.color = colLoss;
@@ -108,6 +121,7 @@ public class UI_Control : MonoBehaviour
         }
         else if (playerScore > botScore)
         {
+            GameManager.Instance.currentPlayer.countWin++;
             txtEndScorePlayer.color = colWin;
             txtEndScoreBot.color = colLoss;
             txtEndTitle.color = colWin;
@@ -151,10 +165,12 @@ public class UI_Control : MonoBehaviour
         if (imgSoundCross.gameObject.activeInHierarchy)
         {   //  включить звук
             imgSoundCross.gameObject.SetActive(false);
+            foneMusic.Play();
         }
         else
         {   //  выключить звук
             imgSoundCross.gameObject.SetActive(true);
+            foneMusic.Pause();
         }
     }
 

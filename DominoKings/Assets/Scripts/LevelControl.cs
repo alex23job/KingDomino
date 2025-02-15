@@ -350,6 +350,7 @@ public class LevelControl : MonoBehaviour
             if (tc.NumPlayer == 1) tc.SetHalfSelect(true, selectHalfMat);
         }
         isCardPut = false;
+        ui_Control.UpdateBtnRewAds(true);
     }
 
     public void SetSelectHalfTail(int landID, int buildID, int numHalfTail)
@@ -494,6 +495,7 @@ public class LevelControl : MonoBehaviour
                 Destroy(selectCard);
                 numStep++;
                 isCardPut = true;
+                ui_Control.UpdateBtnRewAds(false);
             }
             else res = false;
         }
