@@ -48,6 +48,7 @@ public class LevelControl : MonoBehaviour
         HalfData hd2 = poleTails[45].GetComponent<HalfData>();
 
         //  не забыть про построить на половинках замок и рынок
+        hd1.SetLevelControl(GetComponent<LevelControl>());
         hd1.BuildComplete(builds[14]);
         hd2.SetLevelControl(GetComponent<LevelControl>());
         hd2.BuildComplete(builds[13]);
@@ -367,6 +368,11 @@ public class LevelControl : MonoBehaviour
             {   //  чтобы оправдать рынок нужно сделать купи-продай ресурсы
                 print("А это рынок ?");
                 ui_Control.ViewMarket(marketRes, playerRes);
+            }
+            if (buildID ==15)
+            {
+                string strCastle = Language.Instance.CurrentLanguage == "ru" ? "Это замок Короля !" : "This is the King's castle!";
+                ui_Control.ViewMsgHint(strCastle);
             }
         }
         else if (landID > 0 && landID < 8 && isNoBuild)

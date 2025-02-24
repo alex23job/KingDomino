@@ -266,15 +266,16 @@ public class EnemyAI : MonoBehaviour
         int coins = 0;
         ResourseSet changeSet = new ResourseSet(-1);
         if (botRes.CountFood > 20) { changeSet.AddResourse(0, botRes.CountFood - 20, 0, 0, 0); coins += botRes.CountFood - 20; }
-        if (botRes.CountTree > 20) {changeSet.AddResourse(0, 0, botRes.CountTree - 20, 0, 0); coins += botRes.CountTree - 20; }
-        if (botRes.CountIron > 20) {changeSet.AddResourse(0, 0, 0, botRes.CountIron - 20, 0); coins += botRes.CountIron - 20; }
-        if (botRes.CountStone > 20) {changeSet.AddResourse(0, 0, 0, 0, botRes.CountStone - 20); coins += botRes.CountStone - 20; }
+        if (botRes.CountTree > 20) { changeSet.AddResourse(0, 0, botRes.CountTree - 20, 0, 0); coins += botRes.CountTree - 20; }
+        if (botRes.CountIron > 20) { changeSet.AddResourse(0, 0, 0, botRes.CountIron - 20, 0); coins += botRes.CountIron - 20; }
+        if (botRes.CountStone > 20) { changeSet.AddResourse(0, 0, 0, 0, botRes.CountStone - 20); coins += botRes.CountStone - 20; }
 
         if (coins > 0)
         {
             changeSet.AddResourse(-coins, 0, 0, 0, 0);
-            mrkRes.DecrResourse(changeSet);
-            botRes.AddResourse(new ResourseSet(-1, coins, 0, 0, 0, 0));
+            mrkRes.AddResourse(changeSet);
+            botRes.DecrResourse(changeSet);
+            mrkRes.AddResourse(new ResourseSet(-1, coins, 0, 0, 0, 0));
             res = true;
         }
         return res;
