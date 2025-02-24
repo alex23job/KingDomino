@@ -70,6 +70,7 @@ public class LevelControl : MonoBehaviour
         ui_Control.ViewResBot(botRes);
         ui_Control.ViewNames(0, 0);
         //ui_Control.ViewEndGamePanel(200, 154);
+        EndPlayerStep();
     }
 
     private void GenerateNumTails()
@@ -367,6 +368,7 @@ public class LevelControl : MonoBehaviour
             if (buildID == 14)
             {   //  чтобы оправдать рынок нужно сделать купи-продай ресурсы
                 print("А это рынок ?");
+                cube.SetActive(true);
                 ui_Control.ViewMarket(marketRes, playerRes);
             }
             if (buildID ==15)
@@ -421,11 +423,14 @@ public class LevelControl : MonoBehaviour
     /// <param name="zn">0 - левое, 1 - правое из двух для вида местности</param>
     public void OnClickBuildHBP(int zn)
     {
-        HalfData hd = poleTails[numTailForBuild].GetComponent<HalfData>();
-        int index = ConstructionData.LandsBuilds[hd.LandID - 1][zn] - 1;
-        hd.BuildComplete(builds[index]);
-        playerRes.DecrResourse(ConstructionData.BuildPrice[index]);
-        ui_Control.ViewResPlayer(playerRes);
+        if (isNoBuild)
+        {
+            HalfData hd = poleTails[numTailForBuild].GetComponent<HalfData>();
+            int index = ConstructionData.LandsBuilds[hd.LandID - 1][zn] - 1;
+            hd.BuildComplete(builds[index]);
+            playerRes.DecrResourse(ConstructionData.BuildPrice[index]);
+            ui_Control.ViewResPlayer(playerRes);
+        }
         isNoBuild = false;  //  здание на этом ходу построено
         cube.SetActive(false);
         EndPlayerStep();
