@@ -100,6 +100,10 @@ public class UI_Control : MonoBehaviour
 
         GameManager.Instance.currentPlayer.countBattle++;
         GameManager.Instance.currentPlayer.currentScore = playerScore;
+        if (playerScore > botScore)
+        {
+            GameManager.Instance.currentPlayer.countWin++;
+        }
         GameManager.Instance.currentPlayer.LevelComplete();
         GameManager.Instance.SaveGame();
 
@@ -121,7 +125,7 @@ public class UI_Control : MonoBehaviour
         }
         else if (playerScore > botScore)
         {
-            GameManager.Instance.currentPlayer.countWin++;
+            //GameManager.Instance.currentPlayer.countWin++;
             txtEndScorePlayer.color = colWin;
             txtEndScoreBot.color = colLoss;
             txtEndTitle.color = colWin;

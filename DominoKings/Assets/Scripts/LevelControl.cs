@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class LevelControl : MonoBehaviour
 {
+    [SerializeField] private Yandex myYandex;
+
     [SerializeField] private UI_Control ui_Control;
     [SerializeField] private EnemyAI enemyAI;
     [SerializeField] private GameObject[] halfTails;
@@ -26,6 +28,9 @@ public class LevelControl : MonoBehaviour
     private int numStep = 0;
     private bool isNoBuild = true;
     private bool isCardPut = false;
+
+    private bool isFocus = true;
+    private float timer = 0.1f;
 
     private GameObject selectCard = null;
 
@@ -90,7 +95,25 @@ public class LevelControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (timer > 0)
+        {
+            timer -= Time.deltaTime;
+        }
+        else
+        {
+            timer = 0.25f;
+
+#if UNITY_WEBGL            
+            bool curFocus = myYandex.IsFocus();
+            if (curFocus != isFocus)
+            {
+                isFocus = curFocus;
+                if (isFocus) myYandex.GameStart();
+                else myYandex.GameStop();
+                //print($"isFocus => {isFocus}");
+            }
+#endif
+        }
     }
 
     private void GenerateTail()
@@ -151,7 +174,8 @@ public class LevelControl : MonoBehaviour
 
     public void OnAdsClick()
     {
-        Generate3AdsTail();
+        //Generate3AdsTail();
+        myYandex.ClickRewardButton();
     }
 
     private bool TestEndGame()

@@ -219,7 +219,7 @@ public class Yandex : MonoBehaviour
 #if UNITY_WEBGL
         return HasFocus();
 #endif
-        return true;
+        //return true;
     }
 
     /*private void SaveGame()

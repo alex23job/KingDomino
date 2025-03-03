@@ -62,7 +62,7 @@ mergeInto(LibraryManager.library, {
 		ysdk.getLeaderboards()
 		  .then(lb => {
 		    // Без extraData
-		    lb.setLeaderboardScore('Score', score);
+		    lb.setLeaderboardScore('score', score);
 		    // С extraData
 		    //lb.setLeaderboardScore('leaderboard2021', 120, 'My favourite player!');
 		  });
@@ -70,7 +70,7 @@ mergeInto(LibraryManager.library, {
 
 	GetLeaderboardEntries: function () {
 		// Получение 10 топов и по 1 записи вокруг пользователя
-    		lb.getLeaderboardEntries('Score', { quantityTop: 10, includeUser: true, quantityAround: 1 })
+    		lb.getLeaderboardEntries('score', { quantityTop: 10, includeUser: true, quantityAround: 1 })
       		.then(res => {
 			console.log(res);
 			var items = res.entries.map((entry) => {
